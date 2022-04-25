@@ -29,7 +29,7 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
     }
 
     public CharSequenceRule<F> lessThan(final int val) {
-        final Predicate<F> predicate = e -> e.length() < val;
+        final Predicate<F> predicate = e -> e.length() - 1 < val;
         this.addPredicate(new RulePredicate<>(predicate, GetBundle.getInstance().get("lessThan", val)));
         return this;
     }

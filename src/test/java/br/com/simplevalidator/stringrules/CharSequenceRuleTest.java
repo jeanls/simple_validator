@@ -33,19 +33,51 @@ class CharSequenceRuleTest {
     }
 
     @Test
-    void contains() {
+    void containsOk() {
+        boolean result = charSequenceRule.contains("dat").getRules().get(0).getPredicate().test("validator");
+        assertTrue(result);
     }
 
     @Test
-    void lessThan() {
+    void containsFail() {
+        boolean result = charSequenceRule.contains("kkk").getRules().get(0).getPredicate().test("validator");
+        assertFalse(result);
     }
 
     @Test
-    void lessThanOrEquals() {
+    void lessThanOk() {
+        boolean result = charSequenceRule.lessThan(10).getRules().get(0).getPredicate().test("validator");
+        assertTrue(result);
     }
 
     @Test
-    void greaterThan() {
+    void lessThanOkFail() {
+        boolean result = charSequenceRule.lessThan(8).getRules().get(0).getPredicate().test("validator");
+        assertFalse(result);
+    }
+
+    @Test
+    void lessThanOrEqualsOk() {
+        boolean result = charSequenceRule.lessThanOrEquals(9).getRules().get(0).getPredicate().test("validator");
+        assertTrue(result);
+    }
+
+    @Test
+    void lessThanOrEqualsFail() {
+        boolean result = charSequenceRule.lessThanOrEquals(8).getRules().get(0).getPredicate().test("validator");
+        assertFalse(result);
+    }
+
+    @Test
+    void greaterThanOk() {
+        boolean result = charSequenceRule.greaterThan(8).getRules().get(0).getPredicate().test("validator");
+        assertTrue(result);
+    }
+
+    @Test
+    void greaterThanFail() {
+        boolean result = charSequenceRule.greaterThan(10).getRules().get(0).getPredicate().test("validator");
+        assertFalse(result);
     }
 
     @Test
