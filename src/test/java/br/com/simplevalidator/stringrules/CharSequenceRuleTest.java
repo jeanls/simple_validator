@@ -2,6 +2,9 @@ package br.com.simplevalidator.stringrules;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -182,6 +185,288 @@ class CharSequenceRuleTest {
     @Test
     void equalsToFalse() {
         boolean result = charSequenceRule.equalsTo("another").getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertFalse(result);
+    }
+
+    @Test
+    void isPositiveOk() {
+        boolean result = charSequenceRule.isPositive().getRules().get(0).getPredicate().test("1");
+        assertTrue(result);
+    }
+
+    @Test
+    void isPositiveOrZeroOk() {
+        boolean result = charSequenceRule.isPositiveOrZero().getRules().get(0).getPredicate().test("0");
+        assertTrue(result);
+    }
+
+    @Test
+    void isPositiveOrZeroFail() {
+        boolean result = charSequenceRule.isPositiveOrZero().getRules().get(0).getPredicate().test("-1");
+        assertFalse(result);
+    }
+
+    @Test
+    void isPositiveOrZeroNotANumber() {
+        boolean result = charSequenceRule.isPositiveOrZero().getRules().get(0).getPredicate().test("O");
+        assertFalse(result);
+    }
+
+    @Test
+    void isPositiveFalse() {
+        boolean result = charSequenceRule.isPositive().getRules().get(0).getPredicate().test("0");
+        assertFalse(result);
+    }
+
+    @Test
+    void isPositiveNotANumber() {
+        boolean result = charSequenceRule.isPositive().getRules().get(0).getPredicate().test("a");
+        assertFalse(result);
+    }
+
+    @Test
+    void isNegativeOk() {
+        boolean result = charSequenceRule.isNegative().getRules().get(0).getPredicate().test("-1");
+        assertTrue(result);
+    }
+
+    @Test
+    void isNegativeOrZeroOk() {
+        boolean result = charSequenceRule.isNegativeOrZero().getRules().get(0).getPredicate().test("0");
+        assertTrue(result);
+    }
+
+    @Test
+    void isNegativeOrZeroFail() {
+        boolean result = charSequenceRule.isNegativeOrZero().getRules().get(0).getPredicate().test("1");
+        assertFalse(result);
+    }
+
+    @Test
+    void isNegativeOrZeroNotANumber() {
+        boolean result = charSequenceRule.isNegativeOrZero().getRules().get(0).getPredicate().test("X");
+        assertFalse(result);
+    }
+
+    @Test
+    void isNegativeFalse() {
+        boolean result = charSequenceRule.isNegative().getRules().get(0).getPredicate().test("1");
+        assertFalse(result);
+    }
+
+    @Test
+    void isNegativeNotANumber() {
+        boolean result = charSequenceRule.isNegative().getRules().get(0).getPredicate().test("a");
+        assertFalse(result);
+    }
+
+    @Test
+    void matchRegexOk() {
+        boolean result = charSequenceRule.matchRegex("^(.+)@(.+)$").getRules().get(0).getPredicate().test("val@validator.com");
+        assertTrue(result);
+    }
+
+    @Test
+    void matchRegexFail() {
+        boolean result = charSequenceRule.matchRegex("^(.+)@(.+)$").getRules().get(0).getPredicate().test("abc");
+        assertFalse(result);
+    }
+
+    @Test
+    void isValidDateOk() {
+        boolean result = charSequenceRule.isValidDate("yyyy/MM/dd").getRules().get(0).getPredicate().test("1993/05/22");
+        assertTrue(result);
+    }
+
+    @Test
+    void isValidDateFail() {
+        boolean result = charSequenceRule.isValidDate("yyyy/MM/dd").getRules().get(0).getPredicate().test("22/05/1993");
+        assertFalse(result);
+    }
+
+    @Test
+    void isValidDateInvalid() {
+        boolean result = charSequenceRule.isValidDate("yyyy/MM/dd").getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isValidDateTimeOk() {
+        boolean result = charSequenceRule.isValidDateTime("yyyy/MM/dd HH:mm").getRules().get(0).getPredicate().test("1993/05/22 05:00");
+        assertTrue(result);
+    }
+
+    @Test
+    void isValidDateTimeFail() {
+        boolean result = charSequenceRule.isValidDateTime("yyyy/MM/dd HH:mm").getRules().get(0).getPredicate().test("22/05/1993");
+        assertFalse(result);
+    }
+
+    @Test
+    void isValidDateTimeInvalid() {
+        boolean result = charSequenceRule.isValidDateTime("yyyy/MM/dd HH:mm").getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureDateOk() {
+        boolean result = charSequenceRule.isFutureDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isFutureOrPresentDateOk() {
+        boolean result = charSequenceRule.isFutureOrPresentDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isFutureOrPresentDateFail() {
+        boolean result = charSequenceRule.isFutureOrPresentDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureOrPresentDateInvalid() {
+        boolean result = charSequenceRule.isFutureOrPresentDate("yyyy-MM-dd").getRules().get(0).getPredicate().test("lpo");
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureDateFail() {
+        boolean result = charSequenceRule.isFutureDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureDateInvalid() {
+        boolean result = charSequenceRule.isFutureDate("yyyy-MM-dd").getRules().get(0).getPredicate().test("ABC");
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureDateTimeOk() {
+        boolean result = charSequenceRule.isFutureDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isFutureDateTimeFail() {
+        boolean result = charSequenceRule.isFutureDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureDateTimeInvalid() {
+        boolean result = charSequenceRule.isFutureDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test("xp");
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureOrPresentDateTimeOk() {
+        boolean result = charSequenceRule.isFutureOrPresentDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isFutureOrPresentDateTimeFail() {
+        boolean result = charSequenceRule.isFutureOrPresentDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isFutureOrPresentDateTimeInvalid() {
+        boolean result = charSequenceRule.isFutureOrPresentDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test("wasd");
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastDateOk() {
+        boolean result = charSequenceRule.isPastDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isPastDateFail() {
+        boolean result = charSequenceRule.isPastDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastDateInvalid() {
+        boolean result = charSequenceRule.isPastDate("yyyy-MM-dd").getRules().get(0).getPredicate().test("ads");
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastOrPresentDateOk() {
+        boolean result = charSequenceRule.isPastOrPresentDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isPastOrPresentDateFail() {
+        boolean result = charSequenceRule.isPastOrPresentDate("yyyy-MM-dd").getRules().get(0).getPredicate().test(LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastOrPresentDateInvalid() {
+        boolean result = charSequenceRule.isPastOrPresentDate("yyyy-MM-dd").getRules().get(0).getPredicate().test("lk");
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastOrPresentDateTimeOk() {
+        boolean result = charSequenceRule.isPastOrPresentDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isPastOrPresentDateTimeFail() {
+        boolean result = charSequenceRule.isPastOrPresentDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastOrPresentDateTimeInvalid() {
+        boolean result = charSequenceRule.isPastOrPresentDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test("lk");
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastDateTimeOk() {
+        boolean result = charSequenceRule.isPastDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertTrue(result);
+    }
+
+    @Test
+    void isPastDateTimeFail() {
+        boolean result = charSequenceRule.isPastDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        assertFalse(result);
+    }
+
+    @Test
+    void isPastDateTimeInvalid() {
+        boolean result = charSequenceRule.isPastDateTime("yyyy-MM-dd HH:mm").getRules().get(0).getPredicate().test("lk");
+        assertFalse(result);
+    }
+
+    @Test
+    void isDigitOk() {
+        boolean result = charSequenceRule.isDigit().getRules().get(0).getPredicate().test("1234");
+        assertTrue(result);
+    }
+
+    @Test
+    void isDigitFail() {
+        boolean result = charSequenceRule.isDigit().getRules().get(0).getPredicate().test("1234A");
+        assertFalse(result);
+    }
+
+    @Test
+    void isDigitInvalid() {
+        boolean result = charSequenceRule.isDigit().getRules().get(0).getPredicate().test(null);
         assertFalse(result);
     }
 }

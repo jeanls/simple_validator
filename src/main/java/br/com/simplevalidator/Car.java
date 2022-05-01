@@ -39,8 +39,8 @@ public class Car extends Validator<Car> {
         return car.addCharSequenceRule(Car::getManufacturer, "manufacturer", c -> c.greaterThanOrEquals(10)
                         .isNumeric()
                         .notBlank()
+                        .isNegative()
                         .notNull())
-
 //                .addCustomRule(Car::getLicensePlate, "licence_plate", IsOkRule::new, IsOkRule::validate)
 //                .addIntegerRule(Car::getSeatCount, "seatCount", carIntegerIntegerRules -> carIntegerIntegerRules.greaterThan(10))
                 .run(car);

@@ -11,27 +11,23 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public abstract class Validator<D> {
 
     final List<RuleItem<D, Object>> ruleItems = new ArrayList<>();
 
-    protected Validator<D> addCharSequenceRule(Function<D, CharSequence> field, String fieldName, Function<CharSequenceRule<CharSequence>, CharSequenceRule<CharSequence>> rule) {
+    protected Validator<D> addCharSequenceRule(Function<D, CharSequence> field, String fieldName, UnaryOperator<CharSequenceRule<CharSequence>> rule) {
         this.addRule(field, fieldName, rule, CharSequenceRule::new);
         return this;
     }
 
-    protected <V, R extends CustomRule<V, R>> Validator<D> addCustomRule(Function<D, V> field, final String fieldName, Supplier<R> supplier, Function<R, R> rule) {
+    protected <V, R extends CustomRule<V, R>> Validator<D> addCustomRule(Function<D, V> field, final String fieldName, Supplier<R> supplier, UnaryOperator<R> rule) {
         this.addRule(field, fieldName, rule, supplier);
         return this;
     }
 
-//    protected Validator<D> addIntegerRule(Function<T, Integer> field, String fieldName, Function<IntegerRule<Integer>, IntegerRule<Integer>> rule) {
-//        this.addRule(field, fieldName, rule, IntegerRule::new);
-//        return this;
-//    }
-
-    private <V, R extends Rule<V>> void addRule(Function<D, V> field, final String fieldName, Function<R, R> ruleFn, Supplier<R> ruleInstance) {
+    private <V, R extends Rule<V>> void addRule(Function<D, V> field, final String fieldName, UnaryOperator<R> ruleFn, Supplier<R> ruleInstance) {
         R rule = ruleInstance.get();
         this.ruleItems.add(new RuleItem(ruleFn.apply(rule).getRules(), fieldName, field));
     }
@@ -50,3 +46,5 @@ public abstract class Validator<D> {
         return new ValidationResult(isValid.get(), errors);
     }
 }
+
+//TODO add rules de uma lista
