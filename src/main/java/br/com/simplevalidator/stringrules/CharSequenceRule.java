@@ -274,6 +274,8 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         return this;
     }
 
+    //todo colocar not equals
+
     private boolean isNumber(F f) {
         if (isNull(f)) {
             return false;

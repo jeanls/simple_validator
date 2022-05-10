@@ -1,16 +1,26 @@
 package br.com.simplevalidator.dto;
 
+import br.com.simplevalidator.Car;
 import br.com.simplevalidator.Validator;
-import br.com.simplevalidator.validation.ValidationResult;
 
 import java.time.LocalDate;
 
-public class Person extends Validator<Person> {
+public class Person {
 
     private String name;
     private LocalDate birthDate;
     private Double height;
-    private Integer age;
+    private int age;
+
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
     public String getName() {
         return name;
@@ -36,7 +46,7 @@ public class Person extends Validator<Person> {
         this.height = height;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
@@ -44,12 +54,8 @@ public class Person extends Validator<Person> {
         this.age = age;
     }
 
-    public static ValidationResult validate(final Person person) {
-        return person.addCharSequenceRule(Person::getName, "name", rule -> rule.notNull()
-                        .greaterThanOrEquals(5)
-                        .notBlank()
-                        .equalsTo("Jean Leal Silva")
-                )
-                .run(person);
-    }
+//    @Override
+//    public ValidationResult validate() {
+//        return
+//    }
 }
