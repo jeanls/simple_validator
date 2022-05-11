@@ -2,7 +2,7 @@ package br.com.simplevalidator;
 
 import br.com.simplevalidator.commonrules.Rule;
 import br.com.simplevalidator.customrule.CustomRule;
-import br.com.simplevalidator.numberrules.IntegerRule;
+import br.com.simplevalidator.numberrules.NumberRule;
 import br.com.simplevalidator.objectrules.ObjectRule;
 import br.com.simplevalidator.stringrules.CharSequenceRule;
 import br.com.simplevalidator.validation.ValidationCapsule;
@@ -26,8 +26,8 @@ public abstract class Validator<D> {
         return this;
     }
 
-    public Validator<D> addIntegerRule(final Function<D, Number> field, final String fieldName, final UnaryOperator<IntegerRule<Number>> rule) {
-        this.addRule(field, fieldName, rule, IntegerRule::new);
+    public Validator<D> addNumberRule(final Function<D, Number> field, final String fieldName, final UnaryOperator<NumberRule<Number>> rule) {
+        this.addRule(field, fieldName, rule, NumberRule::new);
         return this;
     }
 

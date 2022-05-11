@@ -1,6 +1,5 @@
 package br.com.simplevalidator.validator;
 
-import br.com.simplevalidator.IsOkRule;
 import br.com.simplevalidator.Validator;
 import br.com.simplevalidator.dto.Person;
 import br.com.simplevalidator.objectrules.ObjectRule;
@@ -17,7 +16,7 @@ public class PersonValidator extends Validator<Person> {
                         .greaterThanOrEquals(5)
                         .notBlank()
                         .equalsTo("Jean Leal Silva")
-                ).addIntegerRule(Person::getAge, "age", rule -> rule.notNull().isPositiveOrZero())
+                ).addNumberRule(Person::getAge, "age", rule -> rule.notNull().isPositiveOrZero())
                 .addObjectRule(Person::getCar, "car", ObjectRule::notNull)
 //                .addCustomRule(Person::getName, "", IsOkRule::new, IsOkRule::validate)
                 .addValidator(carValidator, obj.getCar())

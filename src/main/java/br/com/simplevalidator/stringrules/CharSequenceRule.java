@@ -74,6 +74,12 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         return this;
     }
 
+    public CharSequenceRule<F> isBlank(final String... message) {
+        final Predicate<F> predicate = e -> !isNull(e) && ((String) e).isBlank();
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBlank", message)));
+        return this;
+    }
+
     public CharSequenceRule<F> email(final String... message) {
         final Predicate<F> predicate = e -> !isNull(e) && ((String) e).matches("^(.+)@(.+)$");
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("email", message)));
@@ -95,6 +101,12 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
     public CharSequenceRule<F> equalsTo(final CharSequence another, final String... message) {
         final Predicate<F> predicate = e -> !isNull(e) && e.equals(another);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("equalsTo", message, another)));
+        return this;
+    }
+
+    public CharSequenceRule<F> notEqualsTo(final CharSequence another, final String... message) {
+        final Predicate<F> predicate = e -> !isNull(e) && !e.equals(another);
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notEqualsTo", message, another)));
         return this;
     }
 
@@ -273,8 +285,6 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isDigit", message)));
         return this;
     }
-
-    //todo colocar not equals
 
     private boolean isNumber(F f) {
         if (isNull(f)) {
