@@ -1,5 +1,6 @@
 package br.com.simplevalidator;
 
+import br.com.simplevalidator.booleanrules.BooleanRule;
 import br.com.simplevalidator.commonrules.Rule;
 import br.com.simplevalidator.customrule.CustomRule;
 import br.com.simplevalidator.numberrules.NumberRule;
@@ -28,6 +29,11 @@ public abstract class Validator<D> {
 
     public Validator<D> addNumberRule(final Function<D, Number> field, final String fieldName, final UnaryOperator<NumberRule<Number>> rule) {
         this.addRule(field, fieldName, rule, NumberRule::new);
+        return this;
+    }
+
+    public Validator<D> addBooleanRule(final Function<D, Boolean> field, final String fieldName, final UnaryOperator<BooleanRule<Boolean>> rule) {
+        this.addRule(field, fieldName, rule, BooleanRule::new);
         return this;
     }
 

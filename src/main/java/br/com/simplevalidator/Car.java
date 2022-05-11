@@ -13,6 +13,16 @@ public class Car {
 
     private long lifeTime;
 
+    private boolean active;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     private final int seatCount;
 
     public Car(String manufacturer, String licencePlate, int seatCount) {

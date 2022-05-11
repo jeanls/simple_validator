@@ -14,6 +14,7 @@ public class CarValidator extends Validator<Car> {
                 .addNumberRule(Car::getLifeTime, "seat_count", i -> i.isNegative().lessThan(-10))
                 .addNumberRule(Car::getPrice, "seat_count", i -> i.isNegative().lessThan(-10))
                 .addNumberRule(Car::getPriceBg, "seat_count", i -> i.isNegative().lessThan(-10))
+                .addBooleanRule(Car::isActive, "active", b -> b.notNull().isTrue())
                 .run(obj);
     }
 }
