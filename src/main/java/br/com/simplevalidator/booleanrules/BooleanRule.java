@@ -9,6 +9,18 @@ import java.util.function.Predicate;
 
 public class BooleanRule<T extends Boolean> extends Rule<T> {
 
+    public BooleanRule<T> equalsTo(final boolean value, final String... message) {
+        final Predicate<T> predicate = t -> Objects.nonNull(t) && Boolean.valueOf(t) == value;
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isTrue", message)));
+        return this;
+    }
+
+    public BooleanRule<T> notEqualsTo(final boolean value, final String... message) {
+        final Predicate<T> predicate = t -> Objects.nonNull(t) && Boolean.valueOf(t) != value;
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isTrue", message)));
+        return this;
+    }
+
     public BooleanRule<T> isNull(final String... message) {
         final Predicate<T> predicate = Objects::isNull;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isNull", message)));

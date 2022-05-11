@@ -12,14 +12,14 @@ public class PersonValidator extends Validator<Person> {
 
         CarValidator carValidator = new CarValidator();
 
-        return addCharSequenceRule(Person::getName, "name", rule -> rule.notNull()
-                        .greaterThanOrEquals(5)
-                        .notBlank()
-                        .equalsTo("Jean Leal Silva")
-                ).addNumberRule(Person::getAge, "age", rule -> rule.notNull().isPositiveOrZero())
+        return addNumberRule(Person::getAge, "age", r -> r.notNull().greaterThan(18))
+                .addLocalDateTimeRule(Person::getCreatedAt, "created_at", r -> r.notNull().isPast())
+                .addLocalDateRule(Person::getBirthDate, "birth_date", r -> r.notNull().isPast())
+                .addNumberRule(Person::getHeight, "height", r -> r.notNull().greaterThan(1.70))
+                .addCharSequenceRule(Person::getName, "name", r -> r.notNull().notBlank().greaterThanOrEquals(10))
                 .addObjectRule(Person::getCar, "car", ObjectRule::notNull)
-//                .addCustomRule(Person::getName, "", IsOkRule::new, IsOkRule::validate)
-                .addValidator(carValidator, obj.getCar())
+                .addCustomRule(Person::getName, "name", CustomRuleEx::new, CustomRuleEx::validate)
+                .addValidator(Person::getCar, carValidator)
                 .run(obj);
     }
 }

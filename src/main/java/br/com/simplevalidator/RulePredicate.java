@@ -3,11 +3,8 @@ package br.com.simplevalidator;
 import java.util.function.Predicate;
 
 public class RulePredicate<F> {
-    private Predicate<F> predicate;
-    private String message;
-
-    public RulePredicate() {
-    }
+    private final Predicate<F> predicate;
+    private final String message;
 
     public RulePredicate(Predicate<F> predicate, String message) {
         this.predicate = predicate;
@@ -18,15 +15,7 @@ public class RulePredicate<F> {
         return predicate;
     }
 
-    public void setPredicate(Predicate<F> predicate) {
-        this.predicate = predicate;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }

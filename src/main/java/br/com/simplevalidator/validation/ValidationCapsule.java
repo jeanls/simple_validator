@@ -2,12 +2,14 @@ package br.com.simplevalidator.validation;
 
 import br.com.simplevalidator.Validator;
 
-public class ValidationCapsule<V> {
+import java.util.function.Function;
+
+public class ValidationCapsule<K, V> {
 
     private final Validator<V> validator;
-    private final V instance;
+    private final Function<K, V> instance;
 
-    public ValidationCapsule(Validator<V> validator, V instance) {
+    public ValidationCapsule(Validator<V> validator, Function<K, V> instance) {
         this.validator = validator;
         this.instance = instance;
     }
@@ -16,7 +18,7 @@ public class ValidationCapsule<V> {
         return validator;
     }
 
-    public V getInstance() {
+    public Function<K, V> getInstance() {
         return instance;
     }
 }

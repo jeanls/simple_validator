@@ -75,7 +75,13 @@ public class NumberRule<F extends Number> extends Rule<F> {
 
     public NumberRule<F> equalsTo(final Number val, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) == 0;
-        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isNull", message)));
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("equalsTo", message)));
+        return this;
+    }
+
+    public NumberRule<F> notEqualsTo(final Number val, final String... message) {
+        final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) != 0;
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notEqualsTo", message)));
         return this;
     }
 

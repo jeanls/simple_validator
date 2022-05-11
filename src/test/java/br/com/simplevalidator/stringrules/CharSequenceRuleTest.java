@@ -15,6 +15,42 @@ class CharSequenceRuleTest {
     private static final String STR_TO_TEST = "validator";
 
     @Test
+    void isUpperCaseOk() {
+        boolean result = charSequenceRule.isUpperCase().getRules().get(0).getPredicate().test("ABC");
+        assertTrue(result);
+    }
+
+    @Test
+    void isUpperCaseFail() {
+        boolean result = charSequenceRule.isUpperCase().getRules().get(0).getPredicate().test("abc");
+        assertFalse(result);
+    }
+
+    @Test
+    void isUpperCaseNull() {
+        boolean result = charSequenceRule.isUpperCase().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isLowerCaseOk() {
+        boolean result = charSequenceRule.isLowerCase().getRules().get(0).getPredicate().test("xpo");
+        assertTrue(result);
+    }
+
+    @Test
+    void isLowerCaseFail() {
+        boolean result = charSequenceRule.isLowerCase().getRules().get(0).getPredicate().test("XPO");
+        assertFalse(result);
+    }
+
+    @Test
+    void isLowerCaseNull() {
+        boolean result = charSequenceRule.isLowerCase().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
     void startsWithOk() {
         boolean result = charSequenceRule.startsWith("va").getRules().get(0).getPredicate().test(STR_TO_TEST);
         assertTrue(result);
@@ -135,6 +171,18 @@ class CharSequenceRuleTest {
     }
 
     @Test
+    void isBlankOk() {
+        boolean result = charSequenceRule.isBlank().getRules().get(0).getPredicate().test(" ");
+        assertTrue(result);
+    }
+
+    @Test
+    void isBlankFail() {
+        boolean result = charSequenceRule.isBlank().getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertFalse(result);
+    }
+
+    @Test
     void emailOk() {
         boolean result = charSequenceRule.email().getRules().get(0).getPredicate().test("val@validator.com");
         assertTrue(result);
@@ -185,6 +233,18 @@ class CharSequenceRuleTest {
     @Test
     void equalsToFalse() {
         boolean result = charSequenceRule.equalsTo("another").getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertFalse(result);
+    }
+
+    @Test
+    void notEqualsToOk() {
+        boolean result = charSequenceRule.notEqualsTo(STR_TO_TEST).getRules().get(0).getPredicate().test("abc");
+        assertTrue(result);
+    }
+
+    @Test
+    void notEqualsToFalse() {
+        boolean result = charSequenceRule.notEqualsTo(STR_TO_TEST).getRules().get(0).getPredicate().test(STR_TO_TEST);
         assertFalse(result);
     }
 

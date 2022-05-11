@@ -1,11 +1,11 @@
-package br.com.simplevalidator;
+package br.com.simplevalidator.dto;
 
 import java.math.BigDecimal;
 
 public class Car {
-    private final String manufacturer;
+    private String manufacturer;
 
-    private final String licensePlate;
+    private String licensePlate;
 
     private double price;
 
@@ -23,13 +23,7 @@ public class Car {
         this.active = active;
     }
 
-    private final int seatCount;
-
-    public Car(String manufacturer, String licencePlate, int seatCount) {
-        this.manufacturer = manufacturer;
-        this.licensePlate = licencePlate;
-        this.seatCount = seatCount;
-    }
+    private int seatCount;
 
     public String getManufacturer() {
         return manufacturer;
@@ -65,5 +59,17 @@ public class Car {
 
     public void setLifeTime(long lifeTime) {
         this.lifeTime = lifeTime;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public void setSeatCount(int seatCount) {
+        this.seatCount = seatCount;
     }
 }

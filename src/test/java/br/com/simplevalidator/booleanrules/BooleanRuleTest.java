@@ -10,6 +10,30 @@ class BooleanRuleTest {
     private final BooleanRule<Boolean> booleanRule = new BooleanRule<>();
 
     @Test
+    void equalsToOkTest() {
+        boolean result = booleanRule.equalsTo(true).getRules().get(0).getPredicate().test(true);
+        assertTrue(result);
+    }
+
+    @Test
+    void equalsToFailTest() {
+        boolean result = booleanRule.equalsTo(true).getRules().get(0).getPredicate().test(false);
+        assertFalse(result);
+    }
+
+    @Test
+    void notEqualsToOkTest() {
+        boolean result = booleanRule.notEqualsTo(true).getRules().get(0).getPredicate().test(false);
+        assertTrue(result);
+    }
+
+    @Test
+    void notEqualsToFailTest() {
+        boolean result = booleanRule.notEqualsTo(true).getRules().get(0).getPredicate().test(true);
+        assertFalse(result);
+    }
+
+    @Test
     void isNullOkTest() {
         boolean result = booleanRule.isNull().getRules().get(0).getPredicate().test(null);
         assertTrue(result);

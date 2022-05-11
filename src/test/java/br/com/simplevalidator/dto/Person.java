@@ -1,9 +1,7 @@
 package br.com.simplevalidator.dto;
 
-import br.com.simplevalidator.Car;
-import br.com.simplevalidator.Validator;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Person {
 
@@ -13,6 +11,20 @@ public class Person {
     private int age;
 
     private Car car;
+
+    private LocalDateTime createdAt;
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public Car getCar() {
         return car;
@@ -54,8 +66,5 @@ public class Person {
         this.age = age;
     }
 
-//    @Override
-//    public ValidationResult validate() {
-//        return
-//    }
+
 }

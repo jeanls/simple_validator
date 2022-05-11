@@ -14,6 +14,18 @@ import java.util.function.Predicate;
 
 public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
 
+    public CharSequenceRule<F> isUpperCase(final String... message) {
+        final Predicate<F> predicate = this::isUpperCase;
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isUpperCase", message)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isLowerCase(final String... message) {
+        final Predicate<F> predicate = this::isLowerCase;
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isLowerCase", message)));
+        return this;
+    }
+
     public CharSequenceRule<F> startsWith(final CharSequence val, final String... message) {
         final Predicate<F> predicate = e -> !isNull(e) && ((String) e).startsWith(val.toString());
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("startsWith", message, val)));
@@ -324,5 +336,33 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    private boolean isUpperCase(final F f) {
+        if (isNull(f)) {
+            return false;
+        }
+        boolean isUpper = true;
+        for (final Character c : ((String) f).toCharArray()){
+            if(!Character.isDigit(c) && !Character.isUpperCase(c)) {
+                isUpper = false;
+                break;
+            }
+        }
+        return isUpper;
+    }
+
+    private boolean isLowerCase(final F f) {
+        if (isNull(f)) {
+            return false;
+        }
+        boolean isLower = true;
+        for (final Character c : ((String) f).toCharArray()){
+            if(!Character.isDigit(c) && !Character.isLowerCase(c)) {
+                isLower = false;
+                break;
+            }
+        }
+        return isLower;
     }
 }

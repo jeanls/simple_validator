@@ -93,6 +93,18 @@ class NumberRuleTest {
     }
 
     @Test
+    void notEqualsToOkTest() {
+        boolean result = integerNumberRule.notEqualsTo(10).getRules().get(0).getPredicate().test(11);
+        assertTrue(result);
+    }
+
+    @Test
+    void notEqualsToFailTest() {
+        boolean result = integerNumberRule.notEqualsTo(10).getRules().get(0).getPredicate().test(10);
+        assertFalse(result);
+    }
+
+    @Test
     void isPositiveOkTest() {
         boolean result = integerNumberRule.isPositive().getRules().get(0).getPredicate().test(10);
         assertTrue(result);
