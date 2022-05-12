@@ -2,6 +2,9 @@ package br.com.simple_validator.numberrules;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class NumberRuleTest {
@@ -149,6 +152,54 @@ class NumberRuleTest {
     @Test
     void isNegativeOrZeroFailTest() {
         boolean result = integerNumberRule.isNegativeOrZero().getRules().get(0).getPredicate().test(1);
+        assertFalse(result);
+    }
+
+    @Test
+    void betweenOkTest() {
+        boolean result = integerNumberRule.between(9, 10).getRules().get(0).getPredicate().test(10);
+        assertTrue(result);
+    }
+
+    @Test
+    void betweenFailTest() {
+        boolean result = integerNumberRule.between(8, 9).getRules().get(0).getPredicate().test(10);
+        assertFalse(result);
+    }
+
+    @Test
+    void notBetweenOkTest() {
+        boolean result = integerNumberRule.notBetween(9, 10).getRules().get(0).getPredicate().test(8);
+        assertTrue(result);
+    }
+
+    @Test
+    void notBetweenFailTest() {
+        boolean result = integerNumberRule.notBetween(8, 9).getRules().get(0).getPredicate().test(8);
+        assertFalse(result);
+    }
+
+    @Test
+    void inListOkTest() {
+        boolean result = integerNumberRule.inList(Arrays.asList(10, 20)).getRules().get(0).getPredicate().test(10);
+        assertTrue(result);
+    }
+
+    @Test
+    void inListFailTest() {
+        boolean result = integerNumberRule.inList(Arrays.asList(10, 20)).getRules().get(0).getPredicate().test(8);
+        assertFalse(result);
+    }
+
+    @Test
+    void notInListOkTest() {
+        boolean result = integerNumberRule.notInList(Arrays.asList(10, 20)).getRules().get(0).getPredicate().test(5);
+        assertTrue(result);
+    }
+
+    @Test
+    void notInListFailTest() {
+        boolean result = integerNumberRule.notInList(Arrays.asList(10, 20)).getRules().get(0).getPredicate().test(10);
         assertFalse(result);
     }
 }

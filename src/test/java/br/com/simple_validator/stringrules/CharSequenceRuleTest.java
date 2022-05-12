@@ -147,6 +147,42 @@ class CharSequenceRuleTest {
     }
 
     @Test
+    void notSizeOk() {
+        boolean result = charSequenceRule.notSize(10).getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertTrue(result);
+    }
+
+    @Test
+    void notSizeFail() {
+        boolean result = charSequenceRule.notSize(9).getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertFalse(result);
+    }
+
+    @Test
+    void sizesOk() {
+        boolean result = charSequenceRule.sizes(Arrays.asList(10, 9)).getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertTrue(result);
+    }
+
+    @Test
+    void sizesFail() {
+        boolean result = charSequenceRule.sizes(Arrays.asList(10, 11)).getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertFalse(result);
+    }
+
+    @Test
+    void notSizesOk() {
+        boolean result = charSequenceRule.notSizes(Arrays.asList(10, 11)).getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertTrue(result);
+    }
+
+    @Test
+    void notSizesFail() {
+        boolean result = charSequenceRule.notSizes(Arrays.asList(9, 10)).getRules().get(0).getPredicate().test(STR_TO_TEST);
+        assertFalse(result);
+    }
+
+    @Test
     void inOk() {
         boolean result = charSequenceRule.in(Arrays.asList(STR_TO_TEST, "another")).getRules().get(0).getPredicate().test(STR_TO_TEST);
         assertTrue(result);
@@ -159,6 +195,18 @@ class CharSequenceRuleTest {
     }
 
     @Test
+    void notInOk() {
+        boolean result = charSequenceRule.notIn(Arrays.asList("1", "2")).getRules().get(0).getPredicate().test("3");
+        assertTrue(result);
+    }
+
+    @Test
+    void notInFail() {
+        boolean result = charSequenceRule.notIn(Arrays.asList("1", "2")).getRules().get(0).getPredicate().test("1");
+        assertFalse(result);
+    }
+
+    @Test
     void notBlankOk() {
         boolean result = charSequenceRule.notBlank().getRules().get(0).getPredicate().test(STR_TO_TEST);
         assertTrue(result);
@@ -167,6 +215,18 @@ class CharSequenceRuleTest {
     @Test
     void notBlankFail() {
         boolean result = charSequenceRule.notBlank().getRules().get(0).getPredicate().test("  ");
+        assertFalse(result);
+    }
+
+    @Test
+    void notNumericOk() {
+        boolean result = charSequenceRule.notNumeric().getRules().get(0).getPredicate().test("anc");
+        assertTrue(result);
+    }
+
+    @Test
+    void notNumericFail() {
+        boolean result = charSequenceRule.notNumeric().getRules().get(0).getPredicate().test("123");
         assertFalse(result);
     }
 
@@ -329,6 +389,18 @@ class CharSequenceRuleTest {
     @Test
     void matchRegexFail() {
         boolean result = charSequenceRule.matchRegex("^(.+)@(.+)$").getRules().get(0).getPredicate().test("abc");
+        assertFalse(result);
+    }
+
+    @Test
+    void notMatchRegexOk() {
+        boolean result = charSequenceRule.notMatchRegex("^(.+)@(.+)$").getRules().get(0).getPredicate().test("asss");
+        assertTrue(result);
+    }
+
+    @Test
+    void notMatchRegexFail() {
+        boolean result = charSequenceRule.notMatchRegex("^(.+)@(.+)$").getRules().get(0).getPredicate().test("val@validator.com");
         assertFalse(result);
     }
 
@@ -521,6 +593,24 @@ class CharSequenceRuleTest {
     @Test
     void isDigitFail() {
         boolean result = charSequenceRule.isDigit().getRules().get(0).getPredicate().test("1234A");
+        assertFalse(result);
+    }
+
+    @Test
+    void notDigitOk() {
+        boolean result = charSequenceRule.notDigit().getRules().get(0).getPredicate().test("aaa");
+        assertTrue(result);
+    }
+
+    @Test
+    void notDigitFail() {
+        boolean result = charSequenceRule.notDigit().getRules().get(0).getPredicate().test("1234");
+        assertFalse(result);
+    }
+
+    @Test
+    void notDigitNull() {
+        boolean result = charSequenceRule.notDigit().getRules().get(0).getPredicate().test(null);
         assertFalse(result);
     }
 

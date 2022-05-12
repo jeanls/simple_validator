@@ -3,6 +3,7 @@ package br.com.simple_validator.stringrules;
 import br.com.simple_validator.RulePredicate;
 import br.com.simple_validator.commonrules.Rule;
 import br.com.simple_validator.utils.Bundle;
+import br.com.simple_validator.utils.Utils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+
+import static java.util.Objects.isNull;
 
 public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
 
@@ -74,9 +77,33 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         return this;
     }
 
-    public CharSequenceRule<F> in(final List<CharSequence> values, final String... message) {
+    public CharSequenceRule<F> notSize(final int val, final String... message) {
+        final Predicate<F> predicate = e -> !isNull(e) && e.length() != val;
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notSize", message, val)));
+        return this;
+    }
+
+    public CharSequenceRule<F> sizes(final List<Integer> sizes, final String... message) {
+        final Predicate<F> predicate = e -> !isNull(e) && sizes.contains(e.length());
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("sizes", message, Utils.listIntToMsg(sizes))));
+        return this;
+    }
+
+    public CharSequenceRule<F> notSizes(final List<Integer> sizes, final String... message) {
+        final Predicate<F> predicate = e -> !isNull(e) && !sizes.contains(e.length());
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notSizes", message, Utils.listIntToMsg(sizes))));
+        return this;
+    }
+
+    public CharSequenceRule<F> in(final List<F> values, final String... message) {
         final Predicate<F> predicate = values::contains;
-        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("in", message)));
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("in", message, Utils.listCharToMsg(values))));
+        return this;
+    }
+
+    public CharSequenceRule<F> notIn(final List<F> values, final String... message) {
+        final Predicate<F> predicate = f -> Objects.nonNull(f) && !values.contains(f);
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notIn", message, Utils.listCharToMsg(values))));
         return this;
     }
 
@@ -101,6 +128,12 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
     public CharSequenceRule<F> isNumeric(final String... message) {
         final Predicate<F> predicate = this::isNumber;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isNumeric", message)));
+        return this;
+    }
+
+    public CharSequenceRule<F> notNumeric(final String... message) {
+        final Predicate<F> predicate = f -> !this.isNumber(f);
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notNumeric", message)));
         return this;
     }
 
@@ -169,6 +202,12 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
     public CharSequenceRule<F> matchRegex(final String regex, final String... message) {
         final Predicate<F> predicate = e -> !isNull(e) && ((String) e).matches(regex);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("matchRegex", message, regex)));
+        return this;
+    }
+
+    public CharSequenceRule<F> notMatchRegex(final String regex, final String... message) {
+        final Predicate<F> predicate = e -> !isNull(e) && !((String) e).matches(regex);
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notMatchRegex", message, regex)));
         return this;
     }
 
@@ -298,6 +337,24 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         return this;
     }
 
+    public CharSequenceRule<F> notDigit(final String... message) {
+        final Predicate<F> predicate = e -> {
+            if (isNull(e)) {
+                return false;
+            }
+            boolean result = true;
+            for (char c : ((String) e).toCharArray()) {
+                if (Character.isDigit(c)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notDigit", message)));
+        return this;
+    }
+
     private boolean isNumber(F f) {
         if (isNull(f)) {
             return false;
@@ -308,10 +365,6 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         } catch (Exception ex) {
             return false;
         }
-    }
-
-    private boolean isNull(F f) {
-        return f == null;
     }
 
     private boolean validDate(F f, final String pattern) {
