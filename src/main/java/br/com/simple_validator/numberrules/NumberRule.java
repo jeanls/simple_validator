@@ -39,25 +39,25 @@ public class NumberRule<F extends Number> extends Rule<F> {
         map2.put(Float.class, val -> BigDecimal.valueOf((Float) val));
     }
 
-    public NumberRule<F> lessThan(final Number val, final String... message) {
+    public NumberRule<F> lessThan(final F val, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) < 0;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("lessThan", message, val)));
         return this;
     }
 
-    public NumberRule<F> lessThanOrEquals(final Number val, final String... message) {
+    public NumberRule<F> lessThanOrEquals(final F val, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) <= 0;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("lessThanOrEquals", message, val)));
         return this;
     }
 
-    public NumberRule<F> greaterThan(final Number val, final String... message) {
+    public NumberRule<F> greaterThan(final F val, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) > 0;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("greaterThan", message, val)));
         return this;
     }
 
-    public NumberRule<F> greaterThanOrEquals(final Number val, final String... message) {
+    public NumberRule<F> greaterThanOrEquals(final F val, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) >= 0;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("greaterThanOrEquals", message, val)));
         return this;
@@ -75,38 +75,38 @@ public class NumberRule<F extends Number> extends Rule<F> {
         return this;
     }
 
-    public NumberRule<F> equalsTo(final Number val, final String... message) {
+    public NumberRule<F> equalsTo(final F val, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) == 0;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("equalsTo", message)));
         return this;
     }
 
-    public NumberRule<F> notEqualsTo(final Number val, final String... message) {
+    public NumberRule<F> notEqualsTo(final F val, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && getNumber(e).compareTo(getNumberFromParam(val)) != 0;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notEqualsTo", message)));
         return this;
     }
 
-    public NumberRule<F> between(final Number start, final Number end, final String... message) {
+    public NumberRule<F> between(final F start, final F end, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && (getNumber(e).compareTo(getNumberFromParam(start)) >= 0 && getNumber(e).compareTo(getNumberFromParam(end)) <= 0);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("between", message, start, end)));
         return this;
     }
 
-    public NumberRule<F> notBetween(final Number start, final Number end, final String... message) {
+    public NumberRule<F> notBetween(final F start, final F end, final String... message) {
         final Predicate<F> predicate = e -> Objects.nonNull(e) && (getNumber(e).compareTo(getNumberFromParam(start)) < 0 || getNumber(e).compareTo(getNumberFromParam(end)) > 0);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notBetween", message, start, end)));
         return this;
     }
 
-    public NumberRule<F> inList(final List<Number> numberList, final String... message) {
+    public NumberRule<F> inList(final List<F> numberList, final String... message) {
         final List<BigDecimal> newNumberList = numberList.stream().map(this::getNumberFromParam).collect(Collectors.toList());
         final Predicate<F> predicate = e -> Objects.nonNull(e) && newNumberList.contains(getNumber(e));
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("inList", message)));
         return this;
     }
 
-    public NumberRule<F> notInList(final List<Number> numberList, final String... message) {
+    public NumberRule<F> notInList(final List<F> numberList, final String... message) {
         final List<BigDecimal> newNumberList = numberList.stream().map(this::getNumberFromParam).collect(Collectors.toList());
         final Predicate<F> predicate = e -> Objects.nonNull(e) && !newNumberList.contains(getNumber(e));
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notInList", message)));
