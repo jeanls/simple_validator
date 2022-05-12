@@ -1,7 +1,7 @@
 package br.com.simple_validator.validator;
 
-import br.com.simple_validator.dto.Car;
 import br.com.simple_validator.Validator;
+import br.com.simple_validator.dto.Car;
 import br.com.simple_validator.validation.ValidationResult;
 
 import java.math.BigDecimal;

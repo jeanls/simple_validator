@@ -2,8 +2,8 @@ package br.com.simple_validator.numberrules;
 
 import br.com.simple_validator.RulePredicate;
 import br.com.simple_validator.commonrules.Rule;
-import br.com.simple_validator.utils.NumberWrapper;
 import br.com.simple_validator.utils.Bundle;
+import br.com.simple_validator.utils.NumberWrapper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
