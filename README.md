@@ -105,7 +105,7 @@ public class CarValidator extends Validator<Car> {
                 .addNumberRule(Car::getSeatCount, "seat_count", i -> i.notNull().greaterThan(4))
                 .addNumberRule(Car::getLifeTime, "life_time", i -> i.notNull().isPositive())
                 .addNumberRule(Car::getPrice, "price", i -> i.isPositive().greaterThan(new BigDecimal("30000.00")))
-                .addNumberRule(Car::getPriceBg, "price_bg", i -> i.isPositive().lessThan(new BigDecimal("100000.00")))
+                .addNumberRule(Car::getTax, "tax", i -> i.isPositive().lessThan(new BigDecimal("100000.00")))
                 .addBooleanRule(Car::isActive, "active", b -> b.notNull().isTrue())
                 .run(obj);
     }
@@ -131,7 +131,7 @@ class ValidatorTest {
         person.getCar().setActive(true);
         person.getCar().setLifeTime(400);
         person.getCar().setPrice(69990.00);
-        person.getCar().setPriceBg(new BigDecimal("69990.00"));
+        person.getCar().setTax(new BigDecimal("69990.00"));
         person.getCar().setManufacturer("vw");
         person.getCar().setLicensePlate("PKY8899");
         person.getCar().setSeatCount(5);
