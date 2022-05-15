@@ -1,9 +1,8 @@
 # Simple Validator
 
 A simple validator lambda based for java fields validation.
-
+\
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.jeanls/simple_validator.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.jeanls%22%20AND%20a:%22simple_validator%22)
-
 
 ## 1. Getting started.
 
@@ -193,3 +192,19 @@ public class PersonValidator extends Validator<Person> {
 }
 ````
 
+### 5. Main classes.
+
+``ValidationResult``
+
+| **Method**  | **Returns**            | **Description**               |
+|-------------|------------------------|-------------------------------|
+| isValid()   | boolean                | indicates if validation is ok |
+| getErrors() | List\<ValidationError> | List of validation errors     |
+
+``ValidationError``
+
+| **Method**          | **Returns**                    |
+|---------------------|--------------------------------|
+| getFieldName()      | Field name of validation.      |
+| getAttemptedValue() | Attempted value of validation. |
+| getMessage()        | Error message of validation.   |
