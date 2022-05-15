@@ -92,7 +92,7 @@ class LocalDateTimeRuleTest {
 
     @Test
     void isFutureOrPresentOkTest() {
-        LocalDateTime localDate = LocalDateTime.now();
+        LocalDateTime localDate = LocalDateTime.now().plusSeconds(1);
         boolean result = localDateTimeRule.isFutureOrPresent().getRules().get(0).getPredicate().test(localDate);
         assertTrue(result);
     }
