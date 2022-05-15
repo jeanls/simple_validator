@@ -1,8 +1,9 @@
 # Simple Validator
 
-A simple validator lambda based for java fields validation.
-\
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.jeanls/simple_validator.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.jeanls%22%20AND%20a:%22simple_validator%22)
+
+A simple validator lambda based for java fields validation.
+
 
 ## 1. Getting started.
 
