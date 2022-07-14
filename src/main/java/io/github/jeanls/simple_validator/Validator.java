@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public abstract class Validator<D> {
-    private final List<RuleItem<D, Object>> ruleItems = new ArrayList<>();
+    private List<RuleItem<D, Object>> ruleItems = new ArrayList<>();
     private final List<ValidationCapsule<D, ?>> validationCapsules = new ArrayList<>();
 
     public Validator<D> addCharSequenceRule(final Function<D, CharSequence> field, final String fieldName, final UnaryOperator<CharSequenceRule<CharSequence>> rule) {
@@ -66,29 +66,35 @@ public abstract class Validator<D> {
     }
 
     public ValidationResult run(D d) {
-        if (d == null) {
-            return new ValidationResult(false, Collections.emptyList());
-        }
-        final List<ValidationError> errors = new ArrayList<>();
-        boolean isValid = true;
-        for (final RuleItem<D, Object> ruleItem : ruleItems) {
-            for (RulePredicate<Object> rulePredicate : ruleItem.getPredicates()) {
-                final Object o = ruleItem.getField().apply(d);
-                final boolean result = rulePredicate.getPredicate().test(o);
-                if (!result) {
-                    isValid = false;
-                    errors.add(new ValidationError(ruleItem.getFieldName(), o, rulePredicate.getMessage()));
+        try {
+            if (d == null) {
+                return new ValidationResult(false, Collections.emptyList());
+            }
+            final List<ValidationError> errors = new ArrayList<>();
+            boolean isValid = true;
+            for (final RuleItem<D, Object> ruleItem : ruleItems) {
+                for (RulePredicate<Object> rulePredicate : ruleItem.getPredicates()) {
+                    final Object o = ruleItem.getField().apply(d);
+                    final boolean result = rulePredicate.getPredicate().test(o);
+                    if (!result) {
+                        isValid = false;
+                        errors.add(new ValidationError(ruleItem.getFieldName(), o, rulePredicate.getMessage()));
+                    }
                 }
             }
+            for (final ValidationCapsule<D, ?> validationCapsule : this.validationCapsules) {
+                final Validator validator = validationCapsule.getValidator();
+                final Object instance = validationCapsule.getInstance().apply(d);
+                final ValidationResult validationResult = validator.validate(instance);
+                isValid = (isValid && validationResult.isValid());
+                errors.addAll(validationResult.getErrors());
+            }
+            ruleItems = new ArrayList<>();
+            return new ValidationResult(isValid, errors);
+        } catch (Exception e) {
+            ruleItems = new ArrayList<>();
+            throw e;
         }
-        for (final ValidationCapsule<D, ?> validationCapsule : this.validationCapsules) {
-            final Validator validator = validationCapsule.getValidator();
-            final Object instance = validationCapsule.getInstance().apply(d);
-            final ValidationResult validationResult = validator.validate(instance);
-            isValid = (isValid && validationResult.isValid());
-            errors.addAll(validationResult.getErrors());
-        }
-        return new ValidationResult(isValid, errors);
     }
 
     public abstract ValidationResult validate(D obj);
