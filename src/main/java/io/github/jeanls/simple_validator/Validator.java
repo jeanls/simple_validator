@@ -68,7 +68,7 @@ public abstract class Validator<D> {
     public ValidationResult run(D d) {
         try {
             if (d == null) {
-                return new ValidationResult(false, Collections.emptyList());
+                return new ValidationResult(false, Collections.singletonList(new ValidationError(null, null, "BAD_REQUEST")));
             }
             final List<ValidationError> errors = new ArrayList<>();
             boolean isValid = true;

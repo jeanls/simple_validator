@@ -2,6 +2,7 @@ package io.github.jeanls.simple_validator.validator;
 
 import io.github.jeanls.simple_validator.dto.Car;
 import io.github.jeanls.simple_validator.dto.Person;
+import io.github.jeanls.simple_validator.validation.ValidationError;
 import io.github.jeanls.simple_validator.validation.ValidationResult;
 import org.junit.jupiter.api.Test;
 
@@ -66,6 +67,11 @@ class ValidatorTest {
         PersonValidator personValidator = new PersonValidator();
         final ValidationResult validationResult = personValidator.validate(null);
         assertFalse(validationResult.isValid());
-        assertEquals(0, validationResult.getErrors().size());
+        assertEquals(1, validationResult.getErrors().size());
+
+        ValidationError validationError = validationResult.getErrors().get(0);
+        assertEquals("BAD_REQUEST", validationError.getMessage());
+        assertNull(validationError.getFieldName());
+        assertNull(validationError.getAttemptedValue());
     }
 }
