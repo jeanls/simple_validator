@@ -14,14 +14,14 @@ pom.xml
 <dependency>
     <groupId>io.github.jeanls</groupId>
     <artifactId>simple_validator</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ````
 
 build.gradle
 
 ````groovy
-implementation 'io.github.jeanls:simple_validator:1.0.3'
+implementation 'io.github.jeanls:simple_validator:1.0.4'
 ````
 
 ## 2. Example of usage.
