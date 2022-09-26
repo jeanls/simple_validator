@@ -366,7 +366,7 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
     public CharSequenceRule<F> notContainHtml(final String... message) {
         final Pattern htmlPattern = Pattern.compile(".*<[^>]+>.*", Pattern.DOTALL);
         final Predicate<F> predicate = e -> !isNull(e) && !htmlPattern.matcher(e).matches();
-        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("containHtml", message)));
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notContainHtml", message)));
         return this;
     }
 
