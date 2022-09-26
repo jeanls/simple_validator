@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 import static java.util.Objects.isNull;
 
@@ -352,6 +353,20 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
             return result;
         };
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notDigit", message)));
+        return this;
+    }
+
+    public CharSequenceRule<F> containHtml(final String... message) {
+        final Pattern htmlPattern = Pattern.compile(".*<[^>]+>.*", Pattern.DOTALL);
+        final Predicate<F> predicate = e -> !isNull(e) && htmlPattern.matcher(e).matches();
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("containHtml", message)));
+        return this;
+    }
+
+    public CharSequenceRule<F> notContainHtml(final String... message) {
+        final Pattern htmlPattern = Pattern.compile(".*<[^>]+>.*", Pattern.DOTALL);
+        final Predicate<F> predicate = e -> !isNull(e) && !htmlPattern.matcher(e).matches();
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("containHtml", message)));
         return this;
     }
 

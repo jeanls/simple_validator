@@ -620,4 +620,28 @@ class CharSequenceRuleTest {
         boolean result = charSequenceRule.isDigit().getRules().get(0).getPredicate().test(null);
         assertFalse(result);
     }
+
+    @Test
+    void containHtmlSuccessTest() {
+        boolean result = charSequenceRule.containHtml().getRules().get(0).getPredicate().test("<script>const a = 10</script>");
+        assertTrue(result);
+    }
+
+    @Test
+    void containHtmlInvalidTest() {
+        boolean result = charSequenceRule.containHtml().getRules().get(0).getPredicate().test("qwerty");
+        assertFalse(result);
+    }
+
+    @Test
+    void notContainHtmlSuccessTest() {
+        boolean result = charSequenceRule.notContainHtml().getRules().get(0).getPredicate().test("<script>const a = 10</script>");
+        assertFalse(result);
+    }
+
+    @Test
+    void notContainHtmlInvalidTest() {
+        boolean result = charSequenceRule.notContainHtml().getRules().get(0).getPredicate().test("qwerty");
+        assertTrue(result);
+    }
 }
