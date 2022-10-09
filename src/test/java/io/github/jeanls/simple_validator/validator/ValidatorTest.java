@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,10 +57,14 @@ class ValidatorTest {
         person.getCar().setManufacturer("vw");
         person.getCar().setLicensePlate("PKY8899");
         person.getCar().setSeatCount(5);
+        person.setCars(Arrays.asList(
+                person.getCar(),
+                new Car()
+        ));
 
         final ValidationResult validationResult = personValidator.validate(person);
         assertFalse(validationResult.isValid());
-        assertEquals(1, validationResult.getErrors().size());
+        assertEquals(10, validationResult.getErrors().size());
     }
 
     @Test

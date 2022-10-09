@@ -10,6 +10,7 @@ import io.github.jeanls.simple_validator.objectrules.ObjectRule;
 import io.github.jeanls.simple_validator.stringrules.CharSequenceRule;
 import io.github.jeanls.simple_validator.validation.ValidationCapsule;
 import io.github.jeanls.simple_validator.validation.ValidationError;
+import io.github.jeanls.simple_validator.validation.ValidationItemList;
 import io.github.jeanls.simple_validator.validation.ValidationResult;
 
 import java.time.LocalDate;
@@ -23,7 +24,8 @@ import java.util.function.UnaryOperator;
 
 public abstract class Validator<D> {
     private List<RuleItem<D, Object>> ruleItems = new ArrayList<>();
-    private final List<ValidationCapsule<D, ?>> validationCapsules = new ArrayList<>();
+    private List<ValidationCapsule<D, ?>> validationCapsules = new ArrayList<>();
+    private List<ValidationItemList<D, ?, ?>> validationItemLists = new ArrayList<>();
 
     public Validator<D> addCharSequenceRule(final Function<D, CharSequence> field, final String fieldName, final UnaryOperator<CharSequenceRule<CharSequence>> rule) {
         this.addRule(field, fieldName, rule, CharSequenceRule::new);
@@ -89,11 +91,26 @@ public abstract class Validator<D> {
                 isValid = (isValid && validationResult.isValid());
                 errors.addAll(validationResult.getErrors());
             }
-            ruleItems = new ArrayList<>();
+            for (final ValidationItemList<D, ?, ?> validationItemList : validationItemLists) {
+                final List<?> list = validationItemList.getItem().apply(d);
+                final Validator validator = validationItemList.getValidator();
+                for (int x = 0; x < list.size(); x++) {
+                    final Object instance = list.get(x);
+                    final ValidationResult validationResult = validator.validate(instance);
+                    if (!validationResult.isValid()) {
+                        for (final ValidationError error : validationResult.getErrors()) {
+                            error.setMessage(String.format("[%s] %s", x, error.getMessage()));
+                        }
+                    }
+                    isValid = (isValid && validationResult.isValid());
+                    errors.addAll(validationResult.getErrors());
+                }
+            }
             return new ValidationResult(isValid, errors);
-        } catch (Exception e) {
+        } finally {
             ruleItems = new ArrayList<>();
-            throw e;
+            validationCapsules = new ArrayList<>();
+            validationItemLists = new ArrayList<>();
         }
     }
 
@@ -102,6 +119,12 @@ public abstract class Validator<D> {
     public <V> Validator<D> addValidator(final Function<D, V> field, final Validator<V> validator) {
         final ValidationCapsule<D, V> validationCapsule = new ValidationCapsule<>(validator, field);
         validationCapsules.add(validationCapsule);
+        return this;
+    }
+
+    public <V extends List<I>, I> Validator<D> addItemListValidator(final Function<D, V> listField, final Validator<I> validator) {
+        final ValidationItemList<D, V, I> validationItemList = new ValidationItemList<>(validator, listField);
+        this.validationItemLists.add(validationItemList);
         return this;
     }
 }

@@ -4,7 +4,7 @@ public class ValidationError {
 
     private final String fieldName;
     private final Object attemptedValue;
-    private final String message;
+    private String message;
 
     public ValidationError(String fieldName, Object attemptedValue, String message) {
         this.fieldName = fieldName;
@@ -22,5 +22,9 @@ public class ValidationError {
 
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

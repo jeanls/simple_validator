@@ -2,6 +2,8 @@ package io.github.jeanls.simple_validator.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Person {
 
@@ -9,8 +11,8 @@ public class Person {
     private LocalDate birthDate;
     private Double height;
     private int age;
-
     private Car car;
+    private List<Car> cars = new ArrayList<>();
 
     private LocalDateTime createdAt;
 
@@ -66,5 +68,11 @@ public class Person {
         this.age = age;
     }
 
+    public List<Car> getCars() {
+        return cars;
+    }
 
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 }

@@ -20,6 +20,7 @@ public class PersonValidator extends Validator<Person> {
                 .addObjectRule(Person::getCar, "car", ObjectRule::notNull)
                 .addCustomRule(Person::getName, "name", CustomRuleEx::new, CustomRuleEx::validate)
                 .addValidator(Person::getCar, carValidator)
+                .addItemListValidator(Person::getCars, carValidator)
                 .run(obj);
     }
 }
