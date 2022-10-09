@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +35,7 @@ class ValidatorTest {
         person.getCar().setManufacturer("vw");
         person.getCar().setLicensePlate("PKY8899");
         person.getCar().setSeatCount(5);
+        person.setCars(Collections.singletonList(person.getCar()));
 
         final ValidationResult validationResult = personValidator.validate(person);
         assertTrue(validationResult.isValid());
