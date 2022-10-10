@@ -5,6 +5,7 @@ import io.github.jeanls.simple_validator.commonrules.Rule;
 import io.github.jeanls.simple_validator.customrule.CustomRule;
 import io.github.jeanls.simple_validator.daterules.LocalDateRule;
 import io.github.jeanls.simple_validator.daterules.LocalDateTimeRule;
+import io.github.jeanls.simple_validator.listrules.ListRule;
 import io.github.jeanls.simple_validator.numberrules.NumberRule;
 import io.github.jeanls.simple_validator.objectrules.ObjectRule;
 import io.github.jeanls.simple_validator.stringrules.CharSequenceRule;
@@ -49,6 +50,11 @@ public abstract class Validator<D> {
 
     public Validator<D> addLocalDateRule(final Function<D, LocalDate> field, final String fieldName, final UnaryOperator<LocalDateRule<LocalDate>> rule) {
         this.addRule(field, fieldName, rule, LocalDateRule::new);
+        return this;
+    }
+
+    public <L extends List<I>, I> Validator<D> addListRule(final Function<D, L> field, final String fieldName, final UnaryOperator<ListRule<L, I>> rule) {
+        this.addRule(field, fieldName, rule, ListRule::new);
         return this;
     }
 
