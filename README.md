@@ -4,7 +4,6 @@
 
 A simple validator lambda based for java fields validation.
 
-
 ## 1. Getting started.
 
 pom.xml
@@ -59,12 +58,14 @@ public class PersonValidator extends Validator<Person> {
 
     @Override
     public ValidationResult validate(Person obj) {
+
         return addNumberRule(Person::getAge, "age", r -> r.notNull().greaterThan(18))
                 .addLocalDateTimeRule(Person::getCreatedAt, "created_at", r -> r.notNull().isPast())
                 .addLocalDateRule(Person::getBirthDate, "birth_date", r -> r.notNull().isPast())
                 .addNumberRule(Person::getHeight, "height", r -> r.notNull().greaterThan(1.70))
                 .addCharSequenceRule(Person::getName, "name", r -> r.notNull().notBlank().greaterThanOrEquals(10))
                 .addObjectRule(Person::getCar, "car", ObjectRule::notNull)
+                .addListRule(Person::getCars, "cars", r -> r.notNull().lessThan(10))
                 .run(obj);
     }
 }
@@ -137,6 +138,25 @@ class ValidatorTest {
         assertEquals(0, errors.size());
     }
 }
+````
+
+### 2.4. Validation for items in lists.
+
+#### You can create a validator for the items in a list.
+
+````java
+public class PersonValidator extends Validator<Person> {
+
+    @Override
+    public ValidationResult validate(Person obj) {
+
+        CarValidator carValidator = new CarValidator();
+
+        return addItemListValidator(Person::getCars, carValidator)
+                .run(obj);
+    }
+}
+
 ````
 
 ### 3. Custom rules.
