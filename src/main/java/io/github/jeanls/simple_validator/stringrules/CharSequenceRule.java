@@ -370,6 +370,42 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         return this;
     }
 
+    public CharSequenceRule<F> isAlphaNumeric(final String... message) {
+        final Predicate<F> predicate = f -> {
+            if (f == null) {
+                return false;
+            }
+            boolean isAlphaNumeric = true;
+            for (final Character c : ((String) f).toCharArray()){
+                if(!Character.isLetterOrDigit(c)) {
+                    isAlphaNumeric = false;
+                    break;
+                }
+            }
+            return isAlphaNumeric;
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAlphaNumeric", message)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isNotAlphaNumeric(final String... message) {
+        final Predicate<F> predicate = f -> {
+            if (f == null) {
+                return false;
+            }
+            boolean isAlphaNumeric = true;
+            for (final Character c : ((String) f).toCharArray()){
+                if(Character.isLetterOrDigit(c)) {
+                    isAlphaNumeric = false;
+                    break;
+                }
+            }
+            return isAlphaNumeric;
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isNotAlphaNumeric", message)));
+        return this;
+    }
+
     private boolean isNumber(F f) {
         if (isNull(f)) {
             return false;

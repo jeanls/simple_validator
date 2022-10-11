@@ -2,7 +2,6 @@ package io.github.jeanls.simple_validator;
 
 import io.github.jeanls.simple_validator.booleanrules.BooleanRule;
 import io.github.jeanls.simple_validator.commonrules.Rule;
-import io.github.jeanls.simple_validator.customrule.CustomRule;
 import io.github.jeanls.simple_validator.daterules.LocalDateRule;
 import io.github.jeanls.simple_validator.daterules.LocalDateTimeRule;
 import io.github.jeanls.simple_validator.listrules.ListRule;
@@ -63,7 +62,7 @@ public abstract class Validator<D> {
         return this;
     }
 
-    public <V, R extends CustomRule<V, R>> Validator<D> addCustomRule(final Function<D, V> field, final String fieldName, Supplier<R> supplier, UnaryOperator<R> rule) {
+    public <V, R extends Rule<V>> Validator<D> addCustomRule(final Function<D, V> field, final String fieldName, Supplier<R> supplier, UnaryOperator<R> rule) {
         this.addRule(field, fieldName, rule, supplier);
         return this;
     }

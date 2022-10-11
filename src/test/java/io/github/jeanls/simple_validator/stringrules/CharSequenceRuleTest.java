@@ -644,4 +644,44 @@ class CharSequenceRuleTest {
         boolean result = charSequenceRule.notContainHtml().getRules().get(0).getPredicate().test("qwerty");
         assertTrue(result);
     }
+
+    @Test
+    void isAlphaNumericSuccessTest() {
+        boolean result = charSequenceRule.isAlphaNumeric().getRules().get(0).getPredicate().test("ABV12Caah8");
+        assertTrue(result);
+    }
+
+    @Test
+    void isAlphaNumericInvalidTest() {
+        boolean result = charSequenceRule.isAlphaNumeric().getRules().get(0).getPredicate().test("ABV12C@8");
+        assertFalse(result);
+    }
+
+    @Test
+    void isAlphaNumericNullTest() {
+        boolean result = charSequenceRule.isAlphaNumeric().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+
+
+
+
+    @Test
+    void isNotAlphaNumericSuccessTest() {
+        boolean result = charSequenceRule.isNotAlphaNumeric().getRules().get(0).getPredicate().test("@$%&&***");
+        assertTrue(result);
+    }
+
+    @Test
+    void isNotAlphaNumericInvalidTest() {
+        boolean result = charSequenceRule.isNotAlphaNumeric().getRules().get(0).getPredicate().test("ABC5454Ss");
+        assertFalse(result);
+    }
+
+    @Test
+    void isNotAlphaNumericNullTest() {
+        boolean result = charSequenceRule.isNotAlphaNumeric().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
 }
