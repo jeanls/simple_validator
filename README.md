@@ -13,14 +13,14 @@ pom.xml
 <dependency>
     <groupId>io.github.jeanls</groupId>
     <artifactId>simple_validator</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
 </dependency>
 ````
 
 build.gradle
 
 ````groovy
-implementation 'io.github.jeanls:simple_validator:1.0.8'
+implementation 'io.github.jeanls:simple_validator:1.0.9'
 ````
 
 ## 2. Example of usage.
@@ -164,14 +164,14 @@ public class PersonValidator extends Validator<Person> {
 You can create a custom rules for validate yours fields.
 
 ````java
-public class CustomRuleEx extends CustomRule<String, CustomRuleEx> {
+public class CustomRuleEx extends Rule<String> {
 
-    @Override
-    public CustomRuleEx validate(Object... param) {
-        this.addPredicate(new RulePredicate<>(s -> s.equals("Jean Leal Silva"), "The name must be equal to Jean Leal Silva."));
+    public CustomRuleEx isNameEqualsJean() {
+        this.addPredicate(new RulePredicate<>(s -> s.equals("Jean Leal Silva"), "O nome deve ser igual a Jean Leal Silva."));
         return this;
     }
 }
+
 
 ````
 
