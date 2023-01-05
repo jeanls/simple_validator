@@ -105,6 +105,7 @@ public abstract class Validator<D> {
                     if (!validationResult.isValid()) {
                         for (final ValidationError error : validationResult.getErrors()) {
                             error.setMessage(String.format("[%s] %s", x, error.getMessage()));
+                            error.setFieldName(String.format("%s.[%s]", error.getFieldName(), x));
                         }
                     }
                     isValid = (isValid && validationResult.isValid());

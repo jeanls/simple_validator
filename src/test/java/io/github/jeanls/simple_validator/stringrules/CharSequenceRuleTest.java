@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -663,10 +664,6 @@ class CharSequenceRuleTest {
         assertFalse(result);
     }
 
-
-
-
-
     @Test
     void isNotAlphaNumericSuccessTest() {
         boolean result = charSequenceRule.isNotAlphaNumeric().getRules().get(0).getPredicate().test("@$%&&***");
@@ -682,6 +679,18 @@ class CharSequenceRuleTest {
     @Test
     void isNotAlphaNumericNullTest() {
         boolean result = charSequenceRule.isNotAlphaNumeric().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isUUIDV4OkTest() {
+        boolean result = charSequenceRule.isUUIDV4().getRules().get(0).getPredicate().test(UUID.randomUUID().toString());
+        assertTrue(result);
+    }
+
+    @Test
+    void isUUIDV4FailTest() {
+        boolean result = charSequenceRule.isUUIDV4().getRules().get(0).getPredicate().test("ABC");
         assertFalse(result);
     }
 }

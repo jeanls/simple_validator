@@ -2,7 +2,7 @@ package io.github.jeanls.simple_validator.validation;
 
 public class ValidationError {
 
-    private final String fieldName;
+    private String fieldName;
     private final Object attemptedValue;
     private String message;
 
@@ -26,5 +26,9 @@ public class ValidationError {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
     }
 }

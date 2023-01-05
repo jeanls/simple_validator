@@ -92,4 +92,24 @@ class ListRuleTest {
     void lessThanOrEqualsFailTest() {
         assertFalse(listRule.lessThanOrEquals(2).getRules().get(0).getPredicate().test(Arrays.asList("1", "2", "3")));
     }
+
+    @Test
+    void notContainsItemOkTest() {
+        assertTrue(listRule.notContainsItem("C").getRules().get(0).getPredicate().test(List.of("A", "B")));
+    }
+
+    @Test
+    void notContainsItemFailTest() {
+        assertFalse(listRule.notContainsItem("1").getRules().get(0).getPredicate().test(Arrays.asList("1", "2", "3")));
+    }
+
+    @Test
+    void containsItemOkTest() {
+        assertTrue(listRule.containsItem("A").getRules().get(0).getPredicate().test(List.of("A", "B")));
+    }
+
+    @Test
+    void containsItemFailTest() {
+        assertFalse(listRule.containsItem("4").getRules().get(0).getPredicate().test(Arrays.asList("1", "2", "3")));
+    }
 }

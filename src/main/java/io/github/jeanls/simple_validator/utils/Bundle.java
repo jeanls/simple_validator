@@ -21,9 +21,9 @@ public class Bundle {
         return instance;
     }
 
-    public String get(final String key, final String[] customMessage, final Object ... args) {
-        if (customMessage != null && customMessage.length > 0 && customMessage[0] != null) {
-            return customMessage[0];
+    public String get(final String key, final String customMessage, final Object ... args) {
+        if (customMessage != null) {
+            return customMessage;
         }
         final String pattern = resourceBundle.getString(key);
         return MessageFormat.format(pattern, args);
