@@ -48,12 +48,30 @@ public class FileRule<T extends File> extends Rule<T> {
         return this;
     }
 
+    public FileRule<T> hasFileExtension(final String fileExtension, final String message) {
+        final Predicate<T> predicate = file -> {
+            final Optional<String> extension = getExtension(file.getName());
+            return extension.map(s -> s.equals(fileExtension)).orElse(false);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("hasFileExtension", message, fileExtension)));
+        return this;
+    }
+
     public FileRule<T> hasFileExtensions(final List<String> fileExtensions) {
         final Predicate<T> predicate = file -> {
             final Optional<String> extension = getExtension(file.getName());
             return extension.filter(fileExtensions::contains).isPresent();
         };
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("hasFileExtensions", null, Utils.listCharToMsg(fileExtensions))));
+        return this;
+    }
+
+    public FileRule<T> hasFileExtensions(final List<String> fileExtensions, final String message) {
+        final Predicate<T> predicate = file -> {
+            final Optional<String> extension = getExtension(file.getName());
+            return extension.filter(fileExtensions::contains).isPresent();
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("hasFileExtensions", message, Utils.listCharToMsg(fileExtensions))));
         return this;
     }
 
@@ -66,12 +84,30 @@ public class FileRule<T extends File> extends Rule<T> {
         return this;
     }
 
+    public FileRule<T> hasSize(double value, final SizeUnit sizeUnit, final String message) {
+        final Predicate<T> predicate = file -> {
+            final long sizeInMb = getFileSizeInMb(file);
+            return isOkFileSize(sizeInMb) && sizeInMb == convertFileSizeToBytes(sizeUnit, value);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("hasSize", message, value)));
+        return this;
+    }
+
     public FileRule<T> sizeLessThan(double value, final SizeUnit sizeUnit) {
         final Predicate<T> predicate = file -> {
             final long sizeInMb = getFileSizeInMb(file);
             return isOkFileSize(sizeInMb) && sizeInMb < convertFileSizeToBytes(sizeUnit, value);
         };
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("sizeLessThan", null, value)));
+        return this;
+    }
+
+    public FileRule<T> sizeLessThan(double value, final SizeUnit sizeUnit, final String message) {
+        final Predicate<T> predicate = file -> {
+            final long sizeInMb = getFileSizeInMb(file);
+            return isOkFileSize(sizeInMb) && sizeInMb < convertFileSizeToBytes(sizeUnit, value);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("sizeLessThan", message, value)));
         return this;
     }
 
@@ -84,6 +120,15 @@ public class FileRule<T extends File> extends Rule<T> {
         return this;
     }
 
+    public FileRule<T> sizeLessThanOrEquals(double value, final SizeUnit sizeUnit, final String message) {
+        final Predicate<T> predicate = file -> {
+            final long sizeInMb = getFileSizeInMb(file);
+            return isOkFileSize(sizeInMb) && sizeInMb <= convertFileSizeToBytes(sizeUnit, value);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("sizeLessThanOrEquals", message, value)));
+        return this;
+    }
+
     public FileRule<T> sizeGreaterThan(double value, final SizeUnit sizeUnit) {
         final Predicate<T> predicate = file -> {
             final long sizeInMb = getFileSizeInMb(file);
@@ -93,12 +138,30 @@ public class FileRule<T extends File> extends Rule<T> {
         return this;
     }
 
+    public FileRule<T> sizeGreaterThan(double value, final SizeUnit sizeUnit, final String message) {
+        final Predicate<T> predicate = file -> {
+            final long sizeInMb = getFileSizeInMb(file);
+            return isOkFileSize(sizeInMb) && sizeInMb > convertFileSizeToBytes(sizeUnit, value);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("sizeGreaterThan", message, value)));
+        return this;
+    }
+
     public FileRule<T> sizeGreaterThanOrEquals(double value, final SizeUnit sizeUnit) {
         final Predicate<T> predicate = file -> {
             final long sizeInMb = getFileSizeInMb(file);
             return isOkFileSize(sizeInMb) && sizeInMb >= convertFileSizeToBytes(sizeUnit, value);
         };
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("sizeGreaterThanOrEquals", null, value)));
+        return this;
+    }
+
+    public FileRule<T> sizeGreaterThanOrEquals(double value, final SizeUnit sizeUnit, final String message) {
+        final Predicate<T> predicate = file -> {
+            final long sizeInMb = getFileSizeInMb(file);
+            return isOkFileSize(sizeInMb) && sizeInMb >= convertFileSizeToBytes(sizeUnit, value);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("sizeGreaterThanOrEquals", message, value)));
         return this;
     }
 
