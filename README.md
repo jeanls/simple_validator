@@ -2,7 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.jeanls/simple_validator.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.jeanls%22%20AND%20a:%22simple_validator%22)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jeanls_simple_validator&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jeanls_simple_validator)
-
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jeanls_simple_validator&metric=coverage)](https://sonarcloud.io/summary/new_code?id=jeanls_simple_validator)
 
 A simple validator lambda based for java fields validation.
 
