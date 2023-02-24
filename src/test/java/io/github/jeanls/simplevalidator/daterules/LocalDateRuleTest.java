@@ -69,6 +69,13 @@ class LocalDateRuleTest {
     }
 
     @Test
+    void equalsToNullTest() {
+        LocalDate now = LocalDate.now();
+        assertFalse(localDateRule.equalsTo(now).getRules().get(0).getPredicate().test(null));
+        assertFalse(localDateRule.equalsTo(now, MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void notEqualsToOkTest() {
         LocalDate now = LocalDate.now();
         boolean result = localDateRule.notEqualsTo(now).getRules().get(0).getPredicate().test(now.plusDays(1));
@@ -86,6 +93,13 @@ class LocalDateRuleTest {
 
         result = localDateRule.notEqualsTo(now, MESSAGE).getRules().get(1).getPredicate().test(now);
         assertFalse(result);
+    }
+
+    @Test
+    void notEqualsToNullTest() {
+        LocalDate now = LocalDate.now();
+        assertFalse(localDateRule.notEqualsTo(now).getRules().get(0).getPredicate().test(null));
+        assertFalse(localDateRule.notEqualsTo(now, MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 
     @Test
@@ -109,6 +123,12 @@ class LocalDateRuleTest {
     }
 
     @Test
+    void isFutureNullTest() {
+        assertFalse(localDateRule.isFuture().getRules().get(0).getPredicate().test(null));
+        assertFalse(localDateRule.isFuture(MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void isPastOkTest() {
         LocalDate localDate = LocalDate.now();
         boolean result = localDateRule.isPast().getRules().get(0).getPredicate().test(localDate.minusDays(1));
@@ -126,6 +146,12 @@ class LocalDateRuleTest {
 
         result = localDateRule.isPast(MESSAGE).getRules().get(1).getPredicate().test(localDate);
         assertFalse(result);
+    }
+
+    @Test
+    void isPastNullTest() {
+        assertFalse(localDateRule.isPast().getRules().get(0).getPredicate().test(null));
+        assertFalse(localDateRule.isPast(MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 
     @Test
@@ -149,6 +175,12 @@ class LocalDateRuleTest {
     }
 
     @Test
+    void isFutureOrPresentNullTest() {
+        assertFalse(localDateRule.isFutureOrPresent().getRules().get(0).getPredicate().test(null));
+        assertFalse(localDateRule.isFutureOrPresent(MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void isPastOrPresentOkTest() {
         LocalDate localDate = LocalDate.now();
         boolean result = localDateRule.isPastOrPresent().getRules().get(0).getPredicate().test(localDate);
@@ -166,5 +198,11 @@ class LocalDateRuleTest {
 
         result = localDateRule.isPastOrPresent(MESSAGE).getRules().get(1).getPredicate().test(localDate.plusDays(1));
         assertFalse(result);
+    }
+
+    @Test
+    void isPastOrPresentNullTest() {
+        assertFalse(localDateRule.isPastOrPresent().getRules().get(0).getPredicate().test(null));
+        assertFalse(localDateRule.isPastOrPresent(MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 }

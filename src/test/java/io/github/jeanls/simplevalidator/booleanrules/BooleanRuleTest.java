@@ -20,6 +20,12 @@ class BooleanRuleTest {
     }
 
     @Test
+    void equalsToNullTest() {
+        assertFalse(booleanRule.equalsTo(true).getRules().get(0).getPredicate().test(null));
+        assertFalse(booleanRule.equalsTo(true, MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void equalsToFailTest() {
         boolean result = booleanRule.equalsTo(true).getRules().get(0).getPredicate().test(false);
         assertFalse(result);
@@ -44,6 +50,12 @@ class BooleanRuleTest {
 
         result = booleanRule.notEqualsTo(true, MESSAGE).getRules().get(1).getPredicate().test(true);
         assertFalse(result);
+    }
+
+    @Test
+    void notEqualsToNullTest() {
+        assertFalse(booleanRule.notEqualsTo(true).getRules().get(0).getPredicate().test(null));
+        assertFalse(booleanRule.notEqualsTo(true, MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 
     @Test
@@ -101,6 +113,12 @@ class BooleanRuleTest {
     }
 
     @Test
+    void isTrueNullTest() {
+        assertFalse(booleanRule.isTrue().getRules().get(0).getPredicate().test(null));
+        assertFalse(booleanRule.isTrue(MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void isFalseOkTest() {
         boolean result = booleanRule.isFalse().getRules().get(0).getPredicate().test(false);
         assertTrue(result);
@@ -116,5 +134,11 @@ class BooleanRuleTest {
 
         result = booleanRule.isFalse(MESSAGE).getRules().get(1).getPredicate().test(true);
         assertFalse(result);
+    }
+
+    @Test
+    void isFalseNullTest() {
+        assertFalse(booleanRule.isFalse().getRules().get(0).getPredicate().test(null));
+        assertFalse(booleanRule.isFalse(MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 }
