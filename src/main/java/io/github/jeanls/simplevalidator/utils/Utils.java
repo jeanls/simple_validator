@@ -1,18 +1,12 @@
 package io.github.jeanls.simplevalidator.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class Utils {
 
-    private static final List<String> supportedLocales = new ArrayList<>();
-
-    static {
-        supportedLocales.add("pt-BR");
-        supportedLocales.add("en-US");
-    }
+    private static final List<String> supportedLocales = List.of("pt-BR", "en-US");
 
     private Utils() {
 
