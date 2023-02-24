@@ -1,13 +1,12 @@
 package io.github.jeanls.simplevalidator.utils;
 
 import java.text.MessageFormat;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Bundle {
 
     private static Bundle instance;
-    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("words", Locale.getDefault());
+    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("words", Utils.getDefaultLocale());
 
     private Bundle() {
 
