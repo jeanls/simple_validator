@@ -37,7 +37,7 @@ public abstract class Validator<D> {
         return this;
     }
 
-    public Validator<D> addBooleanRule(final Function<D, Boolean> field, final String fieldName, final UnaryOperator<BooleanRule<Boolean>> rule) {
+    public Validator<D> addBooleanRule(final Function<D, Boolean> field, final String fieldName, final UnaryOperator<BooleanRule> rule) {
         this.addRule(field, fieldName, rule, BooleanRule::new);
         return this;
     }
@@ -47,7 +47,7 @@ public abstract class Validator<D> {
         return this;
     }
 
-    public Validator<D> addLocalDateRule(final Function<D, LocalDate> field, final String fieldName, final UnaryOperator<LocalDateRule<LocalDate>> rule) {
+    public Validator<D> addLocalDateRule(final Function<D, LocalDate> field, final String fieldName, final UnaryOperator<LocalDateRule> rule) {
         this.addRule(field, fieldName, rule, LocalDateRule::new);
         return this;
     }
@@ -57,7 +57,7 @@ public abstract class Validator<D> {
         return this;
     }
 
-    public Validator<D> addLocalDateTimeRule(final Function<D, LocalDateTime> field, final String fieldName, final UnaryOperator<LocalDateTimeRule<LocalDateTime>> rule) {
+    public Validator<D> addLocalDateTimeRule(final Function<D, LocalDateTime> field, final String fieldName, final UnaryOperator<LocalDateTimeRule> rule) {
         this.addRule(field, fieldName, rule, LocalDateTimeRule::new);
         return this;
     }
