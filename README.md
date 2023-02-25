@@ -18,14 +18,14 @@ pom.xml
 <dependency>
     <groupId>io.github.jeanls</groupId>
     <artifactId>simple_validator</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 </dependency>
 ````
 
 build.gradle
 
 ````groovy
-implementation 'io.github.jeanls:simple_validator:1.1.2'
+implementation 'io.github.jeanls:simple_validator:1.1.3'
 ````
 
 ## 2. Example of usage.
@@ -217,10 +217,11 @@ public class PersonValidator extends Validator<Person> {
 
 ``ValidationResult``
 
-| **Method**  | **Returns**            | **Description**               |
-|-------------|------------------------|-------------------------------|
-| isValid()   | boolean                | indicates if validation is ok |
-| getErrors() | List\<ValidationError> | List of validation errors     |
+| **Method**                                          | **Returns**            | **Description**                                                                                      |
+|-----------------------------------------------------|------------------------|------------------------------------------------------------------------------------------------------|
+| isValid()                                           | boolean                | indicates if validation is ok                                                                        |
+| getErrors()                                         | List\<ValidationError> | List of validation errors                                                                            |
+| onErrorThrow(Class\<T extends ValidationException>) | throw exception        | Throw exception with ValidationResult, the extension must extend from the class ValidationException  |
 
 ``ValidationError``
 
