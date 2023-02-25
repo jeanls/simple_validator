@@ -52,6 +52,12 @@ class ListRuleTest {
     }
 
     @Test
+    void hasSizeNullTest() {
+        assertFalse(listRule.hasSize(1).getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.hasSize(1, MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void hasNotSizeOkTest() {
         assertTrue(listRule.hasNotSize(1).getRules().get(0).getPredicate().test(Arrays.asList("1", "2")));
         assertTrue(listRule.hasNotSize(1, MESSAGE).getRules().get(1).getPredicate().test(Arrays.asList("1", "2")));
@@ -61,6 +67,12 @@ class ListRuleTest {
     void hasNotSizeFailTest() {
         assertFalse(listRule.hasNotSize(2).getRules().get(0).getPredicate().test(Arrays.asList("1", "2")));
         assertFalse(listRule.hasNotSize(2, MESSAGE).getRules().get(1).getPredicate().test(Arrays.asList("1", "2")));
+    }
+
+    @Test
+    void hasNotSizeNullTest() {
+        assertFalse(listRule.hasNotSize(1).getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.hasNotSize(1, MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 
     @Test
@@ -76,6 +88,12 @@ class ListRuleTest {
     }
 
     @Test
+    void greaterThanNullTest() {
+        assertFalse(listRule.greaterThan(1).getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.greaterThan(1, MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void greaterThanOrEqualsOkTest() {
         assertTrue(listRule.greaterThanOrEquals(1).getRules().get(0).getPredicate().test(List.of("A")));
         assertTrue(listRule.greaterThanOrEquals(1, MESSAGE).getRules().get(1).getPredicate().test(List.of("A")));
@@ -85,6 +103,12 @@ class ListRuleTest {
     void greaterThanOrEqualsFailTest() {
         assertFalse(listRule.greaterThanOrEquals(1).getRules().get(0).getPredicate().test(new ArrayList<>()));
         assertFalse(listRule.greaterThanOrEquals(1, MESSAGE).getRules().get(1).getPredicate().test(new ArrayList<>()));
+    }
+
+    @Test
+    void greaterThanOrEqualsNullTest() {
+        assertFalse(listRule.greaterThanOrEquals(1).getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.greaterThanOrEquals(1, MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 
     @Test
@@ -100,6 +124,12 @@ class ListRuleTest {
     }
 
     @Test
+    void lessThanNullTest() {
+        assertFalse(listRule.lessThan(1).getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.lessThan(1, MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void lessThanOrEqualsOkTest() {
         assertTrue(listRule.lessThanOrEquals(2).getRules().get(0).getPredicate().test(List.of("A", "B")));
         assertTrue(listRule.lessThanOrEquals(2, MESSAGE).getRules().get(1).getPredicate().test(List.of("A", "B")));
@@ -109,6 +139,12 @@ class ListRuleTest {
     void lessThanOrEqualsFailTest() {
         assertFalse(listRule.lessThanOrEquals(2).getRules().get(0).getPredicate().test(Arrays.asList("1", "2", "3")));
         assertFalse(listRule.lessThanOrEquals(2, MESSAGE).getRules().get(1).getPredicate().test(Arrays.asList("1", "2", "3")));
+    }
+
+    @Test
+    void lessThanOrEqualsNullTest() {
+        assertFalse(listRule.lessThanOrEquals(1).getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.lessThanOrEquals(1, MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 
     @Test
@@ -124,6 +160,12 @@ class ListRuleTest {
     }
 
     @Test
+    void notContainsItemNullTest() {
+        assertFalse(listRule.notContainsItem("1").getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.notContainsItem("1", MESSAGE).getRules().get(1).getPredicate().test(null));
+    }
+
+    @Test
     void containsItemOkTest() {
         assertTrue(listRule.containsItem("A").getRules().get(0).getPredicate().test(List.of("A", "B")));
         assertTrue(listRule.containsItem("A", MESSAGE).getRules().get(1).getPredicate().test(List.of("A", "B")));
@@ -133,5 +175,11 @@ class ListRuleTest {
     void containsItemFailTest() {
         assertFalse(listRule.containsItem("4").getRules().get(0).getPredicate().test(Arrays.asList("1", "2", "3")));
         assertFalse(listRule.containsItem("4", MESSAGE).getRules().get(1).getPredicate().test(Arrays.asList("1", "2", "3")));
+    }
+
+    @Test
+    void containsItemNullTest() {
+        assertFalse(listRule.containsItem("4").getRules().get(0).getPredicate().test(null));
+        assertFalse(listRule.containsItem("3", MESSAGE).getRules().get(1).getPredicate().test(null));
     }
 }
