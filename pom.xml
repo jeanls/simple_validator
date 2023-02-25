@@ -42,7 +42,10 @@
         <maven.compiler.target>11</maven.compiler.target>
         <sonar.organization>jeanls</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.exclusions>**/test/**</sonar.exclusions>
+        <sonar.exclusions>
+            **/test/**,
+            **/exceptions/**
+        </sonar.exclusions>
     </properties>
 
     <distributionManagement>
