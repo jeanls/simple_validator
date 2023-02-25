@@ -40,6 +40,7 @@ class ValidatorTest {
 
         final ValidationResult validationResult = personValidator.validate(person);
         assertTrue(validationResult.isValid());
+        assertDoesNotThrow(() -> personValidator.validate(person).onErrorThrow(CustomValidationException.class));
     }
 
     @Test
