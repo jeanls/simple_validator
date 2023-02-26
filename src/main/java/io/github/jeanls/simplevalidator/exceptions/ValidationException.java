@@ -14,7 +14,7 @@ public abstract class ValidationException extends RuntimeException {
         this.validationResult = validationResult;
     }
 
-    public ValidationResult getErrors() {
+    public ValidationResult getValidationResult() {
         return validationResult;
     }
 
