@@ -14,18 +14,17 @@ A simple validator lambda based for java fields validation.
 pom.xml
 
 ````xml
-
 <dependency>
     <groupId>io.github.jeanls</groupId>
     <artifactId>simple_validator</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
 </dependency>
 ````
 
 build.gradle
 
 ````groovy
-implementation 'io.github.jeanls:simple_validator:1.1.4'
+implementation 'io.github.jeanls:simple_validator:1.1.5'
 ````
 
 ## 2. Example of usage.
