@@ -20,7 +20,7 @@ class ValidatorTest {
 
     @Test
     void successTest() {
-        PersonValidator personValidator = new PersonValidator();
+        Validators.PersonValidator personValidator = new Validators.PersonValidator();
 
         Person person = new Person();
         person.setAge(28);
@@ -44,8 +44,74 @@ class ValidatorTest {
     }
 
     @Test
+    void successWhenPayloadAndFieldNameIsPresentTest() {
+        Validators.PersonValidatorWithPayloadAndFieldName personValidator = new Validators.PersonValidatorWithPayloadAndFieldName();
+
+        Person person = new Person();
+        person.setAge(28);
+        person.setCreatedAt(LocalDateTime.now().minusDays(1));
+        person.setHeight(1.72);
+        person.setName("Jean Leal Silva");
+        person.setBirthDate(LocalDate.parse("1993-05-22", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        person.setCar(new Car());
+        person.getCar().setActive(true);
+        person.getCar().setLifeTime(400);
+        person.getCar().setPrice(69990.00);
+        person.getCar().setPriceBg(new BigDecimal("69990.00"));
+        person.getCar().setManufacturer("vw");
+        person.getCar().setLicensePlate("PKY8899");
+        person.getCar().setSeatCount(5);
+        person.setCars(Collections.singletonList(person.getCar()));
+
+        final ValidationResult validationResult = personValidator.validate(person);
+        assertTrue(validationResult.isValid());
+        assertDoesNotThrow(() -> personValidator.validate(person).onErrorThrow(CustomValidationException.class));
+    }
+
+    @Test
+    void errorWhenPayloadAndFieldNameIsPresentTest() {
+        Validators.PersonValidatorWithPayloadAndFieldName personValidator = new Validators.PersonValidatorWithPayloadAndFieldName();
+
+        final ValidationResult validationResult = personValidator.validate(null);
+
+        assertFalse(validationResult.isValid());
+        ValidationError validationError = validationResult.getErrors().get(0);
+        assertEquals("person", validationError.getFieldName());
+        assertNull(validationError.getAttemptedValue());
+    }
+
+    @Test
+    void errorWhenPayloadAndValidateIfNullIsPresentTest() {
+        Validators.PersonValidatorWithPayloadAndValidateIfNull personValidator = new Validators.PersonValidatorWithPayloadAndValidateIfNull();
+
+        final ValidationResult validationResult = personValidator.validate(null);
+
+        assertFalse(validationResult.isValid());
+        ValidationError validationError = validationResult.getErrors().get(0);
+        assertEquals("Person", validationError.getFieldName());
+        assertNull(validationError.getAttemptedValue());
+    }
+
+    @Test
+    void successWhenCarIsNullTest() {
+        Validators.PersonValidator personValidator = new Validators.PersonValidator();
+
+        Person person = new Person();
+        person.setAge(28);
+        person.setCreatedAt(LocalDateTime.now().minusDays(1));
+        person.setHeight(1.72);
+        person.setName("Jean Leal Silva");
+        person.setBirthDate(LocalDate.parse("1993-05-22", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        person.setCar(null);
+
+        final ValidationResult validationResult = personValidator.validate(person);
+        assertTrue(validationResult.isValid());
+        assertDoesNotThrow(() -> personValidator.validate(person).onErrorThrow(CustomValidationException.class));
+    }
+
+    @Test
     void failTest() {
-        PersonValidator personValidator = new PersonValidator();
+        Validators.PersonValidator personValidator = new Validators.PersonValidator();
 
         Person person = new Person();
         person.setAge(28);
@@ -73,7 +139,7 @@ class ValidatorTest {
 
     @Test
     void failWithExceptionTest() {
-        PersonValidator personValidator = new PersonValidator();
+        Validators.PersonValidator personValidator = new Validators.PersonValidator();
 
         Person person = new Person();
         person.setAge(28);
@@ -100,14 +166,13 @@ class ValidatorTest {
 
     @Test
     void failTestWithObjNull() {
-        PersonValidator personValidator = new PersonValidator();
+        Validators.PersonValidator personValidator = new Validators.PersonValidator();
         final ValidationResult validationResult = personValidator.validate(null);
         assertFalse(validationResult.isValid());
         assertEquals(1, validationResult.getErrors().size());
 
         ValidationError validationError = validationResult.getErrors().get(0);
-        assertEquals("BAD_REQUEST", validationError.getMessage());
-        assertNull(validationError.getFieldName());
+        assertEquals("Person", validationError.getFieldName());
         assertNull(validationError.getAttemptedValue());
     }
 }

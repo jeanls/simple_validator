@@ -15,6 +15,6 @@ public class CarValidator extends Validator<Car> {
                 .addNumberRule(Car::getPrice, "price", i -> i.isPositive().greaterThan(new BigDecimal("30000.00")))
                 .addNumberRule(Car::getPriceBg, "price_bg", i -> i.isPositive().lessThan(new BigDecimal("100000.00")))
                 .addBooleanRule(Car::isActive, "active", b -> b.notNull().isTrue())
-                .run(obj);
+                .run(obj, false, "car");
     }
 }
