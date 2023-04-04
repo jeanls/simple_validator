@@ -8,11 +8,13 @@ import io.github.jeanls.simplevalidator.listrules.ListRule;
 import io.github.jeanls.simplevalidator.numberrules.NumberRule;
 import io.github.jeanls.simplevalidator.objectrules.ObjectRule;
 import io.github.jeanls.simplevalidator.stringrules.CharSequenceRule;
+import io.github.jeanls.simplevalidator.utils.Bundle;
 import io.github.jeanls.simplevalidator.validation.ValidationCapsule;
 import io.github.jeanls.simplevalidator.validation.ValidationError;
 import io.github.jeanls.simplevalidator.validation.ValidationItemList;
 import io.github.jeanls.simplevalidator.validation.ValidationResult;
 
+import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -73,10 +75,31 @@ public abstract class Validator<D> {
     }
 
     public ValidationResult run(D d) {
+        return runValidation(d, true, getParameterName());
+    }
+
+    public ValidationResult run(D d, boolean validateIfNull, String fieldName) {
+        return runValidation(d, validateIfNull, fieldName);
+    }
+
+    public ValidationResult run(D d, String fieldName) {
+        return runValidation(d, true, fieldName);
+    }
+
+    public ValidationResult run(D d, boolean validateIfNull) {
+        return runValidation(d, validateIfNull, getParameterName());
+    }
+
+    private ValidationResult runValidation(D d, boolean validateIfNull, String fieldName) {
         try {
-            if (d == null) {
-                return new ValidationResult(false, Collections.singletonList(new ValidationError(null, null, "BAD_REQUEST")));
+            if (d == null && validateIfNull) {
+                return new ValidationResult(false, Collections.singletonList(new ValidationError(fieldName, null, Bundle.getInstance().get("notNull", null))));
             }
+
+            if (d == null) {
+                return new ValidationResult(true, Collections.emptyList());
+            }
+
             final List<ValidationError> errors = new ArrayList<>();
             boolean isValid = true;
             for (final RuleItem<D, Object> ruleItem : ruleItems) {
@@ -132,5 +155,16 @@ public abstract class Validator<D> {
         final ValidationItemList<D, V, I> validationItemList = new ValidationItemList<>(validator, listField);
         this.validationItemLists.add(validationItemList);
         return this;
+    }
+
+    private String getParameterName() {
+        Class actualTypeArgument = (Class) ((ParameterizedType) getClass()
+                .getGenericSuperclass()).getActualTypeArguments()[0];
+
+        String[] split = actualTypeArgument.getName().split("\\.");
+        if(split.length > 0) {
+            return split[split.length - 1];
+        }
+        return "";
     }
 }
