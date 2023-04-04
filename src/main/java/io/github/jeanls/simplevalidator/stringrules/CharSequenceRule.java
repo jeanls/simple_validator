@@ -178,13 +178,13 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
     }
 
     public CharSequenceRule<F> in(final List<F> values, final String message) {
-        final Predicate<F> predicate = values::contains;
+        final Predicate<F> predicate = val -> !isNull(val) && values.contains(val);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("in", message, Utils.listCharToMsg(values))));
         return this;
     }
 
     public CharSequenceRule<F> in(final List<F> values) {
-        final Predicate<F> predicate = values::contains;
+        final Predicate<F> predicate = val -> !isNull(val) && values.contains(val);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("in", null, Utils.listCharToMsg(values))));
         return this;
     }
