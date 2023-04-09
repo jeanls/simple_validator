@@ -88,7 +88,7 @@ class ValidatorTest {
 
         assertFalse(validationResult.isValid());
         ValidationError validationError = validationResult.getErrors().get(0);
-        assertEquals("Person", validationError.getFieldName());
+        assertEquals("", validationError.getFieldName());
         assertNull(validationError.getAttemptedValue());
     }
 
@@ -172,7 +172,7 @@ class ValidatorTest {
         assertEquals(1, validationResult.getErrors().size());
 
         ValidationError validationError = validationResult.getErrors().get(0);
-        assertEquals("Person", validationError.getFieldName());
+        assertEquals("", validationError.getFieldName());
         assertNull(validationError.getAttemptedValue());
     }
 }

@@ -945,11 +945,47 @@ class CharSequenceRuleTest {
     }
 
     @Test
+    void containHtmlWithNullValueTest() {
+        boolean result = charSequenceRule.containHtml().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+
+        result = charSequenceRule.containHtml(MESSAGE).getRules().get(1).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void containHtmlWithEmptyValueTest() {
+        boolean result = charSequenceRule.containHtml().getRules().get(0).getPredicate().test("");
+        assertFalse(result);
+
+        result = charSequenceRule.containHtml(MESSAGE).getRules().get(1).getPredicate().test("");
+        assertFalse(result);
+    }
+
+    @Test
     void notContainHtmlSuccessTest() {
         boolean result = charSequenceRule.notContainHtml().getRules().get(0).getPredicate().test("<script>const a = 10</script>");
         assertFalse(result);
 
         result = charSequenceRule.notContainHtml(MESSAGE).getRules().get(1).getPredicate().test("<script>const a = 10</script>");
+        assertFalse(result);
+    }
+
+    @Test
+    void notContainHtmlWithNullValueTest() {
+        boolean result = charSequenceRule.notContainHtml().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+
+        result = charSequenceRule.notContainHtml(MESSAGE).getRules().get(1).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void notContainHtmlWithEmptyValueTest() {
+        boolean result = charSequenceRule.notContainHtml().getRules().get(0).getPredicate().test("");
+        assertFalse(result);
+
+        result = charSequenceRule.notContainHtml(MESSAGE).getRules().get(1).getPredicate().test("");
         assertFalse(result);
     }
 

@@ -16,6 +16,13 @@ public class Utils {
         return list.stream().map(Object::toString).collect(Collectors.joining(", "));
     }
 
+    public static boolean isEmptyString(final CharSequence val) {
+        if (val == null) {
+            return true;
+        }
+        return ((String)val).trim().length() == 0;
+    }
+
     public static <S extends CharSequence> String listCharToMsg(final List<S> list) {
         return String.join(", ", list);
     }

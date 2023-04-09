@@ -14,7 +14,6 @@ import io.github.jeanls.simplevalidator.validation.ValidationError;
 import io.github.jeanls.simplevalidator.validation.ValidationItemList;
 import io.github.jeanls.simplevalidator.validation.ValidationResult;
 
-import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public abstract class Validator<D> {
     }
 
     public ValidationResult run(D d) {
-        return runValidation(d, true, getParameterName());
+        return runValidation(d, true, "");
     }
 
     public ValidationResult run(D d, boolean validateIfNull, String fieldName) {
@@ -87,7 +86,7 @@ public abstract class Validator<D> {
     }
 
     public ValidationResult run(D d, boolean validateIfNull) {
-        return runValidation(d, validateIfNull, getParameterName());
+        return runValidation(d, validateIfNull, "");
     }
 
     private ValidationResult runValidation(D d, boolean validateIfNull, String fieldName) {
@@ -155,16 +154,5 @@ public abstract class Validator<D> {
         final ValidationItemList<D, V, I> validationItemList = new ValidationItemList<>(validator, listField);
         this.validationItemLists.add(validationItemList);
         return this;
-    }
-
-    private String getParameterName() {
-        Class actualTypeArgument = (Class) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
-
-        String[] split = actualTypeArgument.getName().split("\\.");
-        if(split.length > 0) {
-            return split[split.length - 1];
-        }
-        return "";
     }
 }

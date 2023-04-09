@@ -15,6 +15,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import static io.github.jeanls.simplevalidator.utils.Utils.isEmptyString;
 import static java.util.Objects.isNull;
 
 public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
@@ -699,28 +700,28 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
 
     public CharSequenceRule<F> containHtml(final String message) {
         final Pattern htmlPattern = Pattern.compile(HTML_REGEX, Pattern.DOTALL);
-        final Predicate<F> predicate = e -> !isNull(e) && htmlPattern.matcher(e).matches();
+        final Predicate<F> predicate = e -> !isEmptyString(e) && htmlPattern.matcher(e).matches();
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("containHtml", message)));
         return this;
     }
 
     public CharSequenceRule<F> containHtml() {
         final Pattern htmlPattern = Pattern.compile(HTML_REGEX, Pattern.DOTALL);
-        final Predicate<F> predicate = e -> !isNull(e) && htmlPattern.matcher(e).matches();
+        final Predicate<F> predicate = e -> !isEmptyString(e) && htmlPattern.matcher(e).matches();
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("containHtml", null)));
         return this;
     }
 
     public CharSequenceRule<F> notContainHtml(final String message) {
         final Pattern htmlPattern = Pattern.compile(HTML_REGEX, Pattern.DOTALL);
-        final Predicate<F> predicate = e -> !isNull(e) && !htmlPattern.matcher(e).matches();
+        final Predicate<F> predicate = e -> !isEmptyString(e) && !htmlPattern.matcher(e).matches();
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notContainHtml", message)));
         return this;
     }
 
     public CharSequenceRule<F> notContainHtml() {
         final Pattern htmlPattern = Pattern.compile(HTML_REGEX, Pattern.DOTALL);
-        final Predicate<F> predicate = e -> !isNull(e) && !htmlPattern.matcher(e).matches();
+        final Predicate<F> predicate = e -> !isEmptyString(e) && !htmlPattern.matcher(e).matches();
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("notContainHtml", null)));
         return this;
     }
