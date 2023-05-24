@@ -837,7 +837,7 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
             return false;
         }
         try {
-            Long.valueOf((String) f);
+           new BigDecimal((String) f);
             return true;
         } catch (Exception ex) {
             return false;

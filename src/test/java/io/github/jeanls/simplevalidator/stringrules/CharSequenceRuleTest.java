@@ -384,6 +384,9 @@ class CharSequenceRuleTest {
 
         result = charSequenceRule.isNumeric(MESSAGE).getRules().get(1).getPredicate().test("12356");
         assertTrue(result);
+
+        result = charSequenceRule.isNumeric(MESSAGE).getRules().get(2).getPredicate().test("75.5");
+        assertTrue(result);
     }
 
     @Test
