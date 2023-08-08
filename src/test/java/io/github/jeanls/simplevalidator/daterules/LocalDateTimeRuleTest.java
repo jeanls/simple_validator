@@ -12,6 +12,81 @@ class LocalDateTimeRuleTest {
     private final LocalDateTimeRule localDateTimeRule = new LocalDateTimeRule();
     private final String MESSAGE = "sad";
 
+
+    @Test
+    void isAfterOkTest() {
+        boolean result = localDateTimeRule.isAfter(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1));
+        assertTrue(result);
+
+        result = localDateTimeRule.isAfter(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1));
+        assertTrue(result);
+    }
+
+    @Test
+    void isAfterFailTest() {
+        boolean result = localDateTimeRule.isAfter(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1));
+        assertFalse(result);
+
+        result = localDateTimeRule.isAfter(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1));
+        assertFalse(result);
+    }
+
+
+    @Test
+    void isAfterOrEqualsOkTest() {
+        boolean result = localDateTimeRule.isAfterOrEquals(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now());
+        assertTrue(result);
+
+        result = localDateTimeRule.isAfterOrEquals(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now());
+        assertTrue(result);
+    }
+
+    @Test
+    void isAfterOrEqualsFailTest() {
+        boolean result = localDateTimeRule.isAfterOrEquals(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1));
+        assertFalse(result);
+
+        result = localDateTimeRule.isAfterOrEquals(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1));
+        assertFalse(result);
+    }
+
+    @Test
+    void isBeforeOrEqualsOkTest() {
+        boolean result = localDateTimeRule.isBeforeOrEquals(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now());
+        assertTrue(result);
+
+        result = localDateTimeRule.isBeforeOrEquals(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now());
+        assertTrue(result);
+    }
+
+    @Test
+    void isBeforeOrEqualsFailTest() {
+        boolean result = localDateTimeRule.isBeforeOrEquals(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1));
+        assertFalse(result);
+
+        result = localDateTimeRule.isBeforeOrEquals(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1));
+        assertFalse(result);
+    }
+
+
+    @Test
+    void isBeforeOkTest() {
+        boolean result = localDateTimeRule.isBefore(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1));
+        assertTrue(result);
+
+        result = localDateTimeRule.isBefore(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now().minusDays(1));
+        assertTrue(result);
+    }
+
+    @Test
+    void isBeforeFailTest() {
+        boolean result = localDateTimeRule.isBefore(LocalDateTime.now()).getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1));
+        assertFalse(result);
+
+        result = localDateTimeRule.isBefore(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now().plusDays(1));
+        assertFalse(result);
+    }
+
     @Test
     void isNullOkTest() {
         boolean result = localDateTimeRule.isNull().getRules().get(0).getPredicate().test(null);

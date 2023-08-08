@@ -18,6 +18,198 @@ class CharSequenceRuleTest {
     private static final String MESSAGE = "msg";
 
     @Test
+    void isBooleanTrueOkTest() {
+        boolean result = charSequenceRule.isBoolean().getRules().get(0).getPredicate().test("true");
+        assertTrue(result);
+        result = charSequenceRule.isBoolean(MESSAGE).getRules().get(0).getPredicate().test("true");
+        assertTrue(result);
+    }
+
+    @Test
+    void isBooleanFalseOkTest() {
+        boolean result = charSequenceRule.isBoolean().getRules().get(0).getPredicate().test("false");
+        assertTrue(result);
+        result = charSequenceRule.isBoolean(MESSAGE).getRules().get(0).getPredicate().test("false");
+        assertTrue(result);
+    }
+
+    @Test
+    void isBooleanFailTest() {
+        boolean result = charSequenceRule.isBoolean().getRules().get(0).getPredicate().test("kkk");
+        assertFalse(result);
+        result = charSequenceRule.isBoolean(MESSAGE).getRules().get(0).getPredicate().test("kkk");
+        assertFalse(result);
+    }
+
+    @Test
+    void isBooleanNullTest() {
+        boolean result = charSequenceRule.isBoolean().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+        result = charSequenceRule.isBoolean(MESSAGE).getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isAfterOkTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().plusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isAfterDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertTrue(result);
+
+        result = charSequenceRule.isAfterDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertTrue(result);
+    }
+
+    @Test
+    void isAfterFailTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().minusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isAfterDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertFalse(result);
+
+        result = charSequenceRule.isAfterDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertFalse(result);
+    }
+
+    @Test
+    void isAfterNullTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        boolean result = charSequenceRule.isAfterDate(actualDate, pattern).getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+
+        result = charSequenceRule.isAfterDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isAfterOrEqualsOkTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isAfterOrEqualsDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertTrue(result);
+
+        result = charSequenceRule.isAfterOrEqualsDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertTrue(result);
+    }
+
+    @Test
+    void isAfterOrEqualsFailTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().minusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isAfterOrEqualsDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertFalse(result);
+
+        result = charSequenceRule.isAfterOrEqualsDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertFalse(result);
+    }
+
+    @Test
+    void isAfterOrEqualsNullTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        boolean result = charSequenceRule.isAfterOrEqualsDate(actualDate, pattern).getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+
+        result = charSequenceRule.isAfterOrEqualsDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isBeforeOkTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().minusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isBeforeDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertTrue(result);
+
+        result = charSequenceRule.isBeforeDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertTrue(result);
+    }
+
+    @Test
+    void isBeforeFailTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().plusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isBeforeDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertFalse(result);
+
+        result = charSequenceRule.isBeforeDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertFalse(result);
+    }
+
+    @Test
+    void isBeforeNullTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        boolean result = charSequenceRule.isBeforeDate(actualDate, pattern).getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+
+        result = charSequenceRule.isBeforeDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
+    void isBeforeOrEqualsOkTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isBeforeOrEqualsDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertTrue(result);
+
+        result = charSequenceRule.isBeforeOrEqualsDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertTrue(result);
+    }
+
+    @Test
+    void isBeforeOrEqualsFailTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        String testDate = LocalDate.now().plusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        boolean result = charSequenceRule.isBeforeOrEqualsDate(actualDate, pattern).getRules().get(0).getPredicate().test(testDate);
+        assertFalse(result);
+
+        result = charSequenceRule.isBeforeOrEqualsDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(testDate);
+        assertFalse(result);
+    }
+
+    @Test
+    void isBeforeOrEqualsNullTest() {
+        String actualDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
+        String pattern = "yyyy-MM-dd";
+
+        boolean result = charSequenceRule.isBeforeOrEqualsDate(actualDate, pattern).getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+
+        result = charSequenceRule.isBeforeOrEqualsDate(actualDate, pattern, MESSAGE).getRules().get(1).getPredicate().test(null);
+        assertFalse(result);
+    }
+
+    @Test
     void isUpperCaseOk() {
         boolean result = charSequenceRule.isUpperCase().getRules().get(0).getPredicate().test("ABC");
         assertTrue(result);
@@ -1070,6 +1262,15 @@ class CharSequenceRuleTest {
         assertFalse(result);
 
         result = charSequenceRule.isUUIDV4(MESSAGE).getRules().get(1).getPredicate().test("ABC");
+        assertFalse(result);
+    }
+
+    @Test
+    void isUUIDV4NullTest() {
+        boolean result = charSequenceRule.isUUIDV4().getRules().get(0).getPredicate().test(null);
+        assertFalse(result);
+
+        result = charSequenceRule.isUUIDV4(MESSAGE).getRules().get(1).getPredicate().test(null);
         assertFalse(result);
     }
 }

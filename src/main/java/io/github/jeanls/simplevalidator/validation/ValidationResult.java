@@ -2,6 +2,7 @@ package io.github.jeanls.simplevalidator.validation;
 
 import io.github.jeanls.simplevalidator.exceptions.ValidationException;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ValidationResult {
@@ -26,5 +27,13 @@ public class ValidationResult {
         if (!valid) {
             throw ValidationException.build(tClass, this);
         }
+    }
+
+    public static ValidationResult valid() {
+        return new ValidationResult(true, Collections.emptyList());
+    }
+
+    public static ValidationResult invalid() {
+        return new ValidationResult(false, Collections.emptyList());
     }
 }

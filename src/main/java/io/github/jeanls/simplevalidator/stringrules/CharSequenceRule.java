@@ -22,6 +22,118 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
 
     private static final String HTML_REGEX = ".*<[^>]+>.*";
 
+    public CharSequenceRule<F> isAfterDate(final String actualDateStr, final String datePattern, final String message) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actualDateStr, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isAfter(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfter", message, actualDateStr)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isAfterDate(final String actual, final String datePattern) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actual, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isAfter(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfter", null, actual)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isAfterOrEqualsDate(final String actual, final String datePattern, final String message) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actual, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isAfter(actualDate) || stringToLocalDate.isEqual(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfterOrEquals", message, actual)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isAfterOrEqualsDate(final String actual, final String datePattern) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actual, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isAfter(actualDate) || stringToLocalDate.isEqual(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfterOrEquals", null, actual)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isBeforeDate(final String actual, final String datePattern, final String message) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actual, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isBefore(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBefore", message, actual)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isBeforeDate(final String actual, final String datePattern) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actual, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isBefore(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBefore", null, actual)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isBeforeOrEqualsDate(final String actual, final String datePattern, final String message) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actual, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isBefore(actualDate) || stringToLocalDate.isEqual(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBeforeOrEquals", message, actual)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isBeforeOrEqualsDate(final String actual, final String datePattern) {
+        final Predicate<F> predicate = strDate -> {
+            if (Objects.isNull(strDate) || Objects.isNull(datePattern)) {
+                return false;
+            }
+            LocalDate actualDate = LocalDate.parse(actual, DateTimeFormatter.ofPattern(datePattern));
+            LocalDate stringToLocalDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(datePattern));
+
+            return stringToLocalDate.isBefore(actualDate) || stringToLocalDate.isEqual(actualDate);
+        };
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBeforeOrEquals", null, actual)));
+        return this;
+    }
+
     public CharSequenceRule<F> isUpperCase(final String message) {
         final Predicate<F> predicate = this::isUpperCase;
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isUpperCase", message)));
@@ -732,8 +844,8 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
                 return false;
             }
             boolean isAlphaNumeric = true;
-            for (final Character c : ((String) f).toCharArray()){
-                if(!Character.isLetterOrDigit(c)) {
+            for (final Character c : ((String) f).toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
                     isAlphaNumeric = false;
                     break;
                 }
@@ -750,8 +862,8 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
                 return false;
             }
             boolean isAlphaNumeric = true;
-            for (final Character c : ((String) f).toCharArray()){
-                if(!Character.isLetterOrDigit(c)) {
+            for (final Character c : ((String) f).toCharArray()) {
+                if (!Character.isLetterOrDigit(c)) {
                     isAlphaNumeric = false;
                     break;
                 }
@@ -768,8 +880,8 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
                 return false;
             }
             boolean isAlphaNumeric = true;
-            for (final Character c : ((String) f).toCharArray()){
-                if(Character.isLetterOrDigit(c)) {
+            for (final Character c : ((String) f).toCharArray()) {
+                if (Character.isLetterOrDigit(c)) {
                     isAlphaNumeric = false;
                     break;
                 }
@@ -786,8 +898,8 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
                 return false;
             }
             boolean isAlphaNumeric = true;
-            for (final Character c : ((String) f).toCharArray()){
-                if(Character.isLetterOrDigit(c)) {
+            for (final Character c : ((String) f).toCharArray()) {
+                if (Character.isLetterOrDigit(c)) {
                     isAlphaNumeric = false;
                     break;
                 }
@@ -832,12 +944,24 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
         return this;
     }
 
+    public CharSequenceRule<F> isBoolean() {
+        final Predicate<F> predicate = val -> Objects.equals(val, "true") || Objects.equals(val, "false");
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBoolean", null)));
+        return this;
+    }
+
+    public CharSequenceRule<F> isBoolean(final String message) {
+        final Predicate<F> predicate = val -> Objects.equals(val, "true") || Objects.equals(val, "false");
+        this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBoolean", message)));
+        return this;
+    }
+
     private boolean isNumber(F f) {
         if (isNull(f)) {
             return false;
         }
         try {
-           new BigDecimal((String) f);
+            new BigDecimal((String) f);
             return true;
         } catch (Exception ex) {
             return false;
@@ -873,8 +997,8 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
             return false;
         }
         boolean isUpper = true;
-        for (final Character c : ((String) f).toCharArray()){
-            if(!Character.isDigit(c) && !Character.isUpperCase(c)) {
+        for (final Character c : ((String) f).toCharArray()) {
+            if (!Character.isDigit(c) && !Character.isUpperCase(c)) {
                 isUpper = false;
                 break;
             }
@@ -887,8 +1011,8 @@ public class CharSequenceRule<F extends CharSequence> extends Rule<F> {
             return false;
         }
         boolean isLower = true;
-        for (final Character c : ((String) f).toCharArray()){
-            if(!Character.isDigit(c) && !Character.isLowerCase(c)) {
+        for (final Character c : ((String) f).toCharArray()) {
+            if (!Character.isDigit(c) && !Character.isLowerCase(c)) {
                 isLower = false;
                 break;
             }
