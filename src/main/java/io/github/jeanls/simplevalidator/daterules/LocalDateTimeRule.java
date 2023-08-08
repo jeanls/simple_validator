@@ -11,49 +11,49 @@ import java.util.function.Predicate;
 public class LocalDateTimeRule extends Rule<LocalDateTime> {
 
     public LocalDateTimeRule isAfter(final LocalDateTime actual, final String message) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && localDate.isAfter(actual);
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && localDateTime.isAfter(actual);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfter", message)));
         return this;
     }
 
     public LocalDateTimeRule isAfter(final LocalDateTime actual) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && localDate.isAfter(actual);
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && localDateTime.isAfter(actual);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfter", null)));
         return this;
     }
 
     public LocalDateTimeRule isAfterOrEquals(final LocalDateTime actual, final String message) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && (localDate.isAfter(actual) || localDate.equals(actual));
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && (localDateTime.isAfter(actual) || localDateTime.equals(actual));
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfterOrEquals", message)));
         return this;
     }
 
     public LocalDateTimeRule isAfterOrEquals(final LocalDateTime actual) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && (localDate.isAfter(actual) || localDate.equals(actual));
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && (localDateTime.isAfter(actual) || localDateTime.equals(actual));
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isAfterOrEquals", null)));
         return this;
     }
 
     public LocalDateTimeRule isBefore(final LocalDateTime actual, final String message) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && localDate.isBefore(actual);
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && localDateTime.isBefore(actual);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBefore", message)));
         return this;
     }
 
     public LocalDateTimeRule isBefore(final LocalDateTime actual) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && localDate.isBefore(actual);
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && localDateTime.isBefore(actual);
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBefore", null)));
         return this;
     }
 
     public LocalDateTimeRule isBeforeOrEquals(final LocalDateTime actual, final String message) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && (localDate.isBefore(actual) || localDate.equals(actual));
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && (localDateTime.isBefore(actual) || localDateTime.equals(actual));
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBeforeOrEquals", message)));
         return this;
     }
 
     public LocalDateTimeRule isBeforeOrEquals(final LocalDateTime actual) {
-        final Predicate<LocalDateTime> predicate =  localDate -> Objects.nonNull(localDate) && (localDate.isBefore(actual) || localDate.equals(actual));
+        final Predicate<LocalDateTime> predicate = localDateTime -> Objects.nonNull(localDateTime) && (localDateTime.isBefore(actual) || localDateTime.equals(actual));
         this.addPredicate(new RulePredicate<>(predicate, Bundle.getInstance().get("isBeforeOrEquals", null)));
         return this;
     }

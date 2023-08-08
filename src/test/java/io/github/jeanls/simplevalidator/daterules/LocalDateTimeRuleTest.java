@@ -38,7 +38,7 @@ class LocalDateTimeRuleTest {
         boolean result = localDateTimeRule.isAfterOrEquals(localDateTimeNow).getRules().get(0).getPredicate().test(localDateTimeNow);
         assertTrue(result);
 
-        result = localDateTimeRule.isAfterOrEquals(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now());
+        result = localDateTimeRule.isAfterOrEquals(localDateTimeNow, MESSAGE).getRules().get(0).getPredicate().test(localDateTimeNow);
         assertTrue(result);
     }
 
@@ -58,7 +58,7 @@ class LocalDateTimeRuleTest {
         boolean result = localDateTimeRule.isBeforeOrEquals(localDateTimeNow).getRules().get(0).getPredicate().test(localDateTimeNow);
         assertTrue(result);
 
-        result = localDateTimeRule.isBeforeOrEquals(LocalDateTime.now(), MESSAGE).getRules().get(0).getPredicate().test(LocalDateTime.now());
+        result = localDateTimeRule.isBeforeOrEquals(localDateTimeNow, MESSAGE).getRules().get(0).getPredicate().test(localDateTimeNow);
         assertTrue(result);
     }
 
