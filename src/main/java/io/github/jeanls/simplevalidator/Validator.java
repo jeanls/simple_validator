@@ -89,7 +89,7 @@ public abstract class Validator<D> {
         return runValidation(d, validateIfNull, "");
     }
 
-    private ValidationResult runValidation(D d, boolean validateIfNull, String fieldName) {
+    private synchronized ValidationResult runValidation(D d, boolean validateIfNull, String fieldName) {
         try {
             if (d == null && validateIfNull) {
                 return new ValidationResult(false, Collections.singletonList(new ValidationError(fieldName, null, Bundle.getInstance().get("notNull", null))));
