@@ -19,14 +19,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public abstract class Validator<D> {
-    private List<RuleItem<D, Object>> ruleItems = new ArrayList<>();
-    private List<ValidationCapsule<D, ?>> validationCapsules = new ArrayList<>();
-    private List<ValidationItemList<D, ?, ?>> validationItemLists = new ArrayList<>();
+    private List<RuleItem<D, Object>> ruleItems = new CopyOnWriteArrayList<>();
+    private List<ValidationCapsule<D, ?>> validationCapsules = new CopyOnWriteArrayList<>();
+    private List<ValidationItemList<D, ?, ?>> validationItemLists = new CopyOnWriteArrayList<>();
 
     public Validator<D> addCharSequenceRule(final Function<D, CharSequence> field, final String fieldName, final UnaryOperator<CharSequenceRule<CharSequence>> rule) {
         this.addRule(field, fieldName, rule, CharSequenceRule::new);
