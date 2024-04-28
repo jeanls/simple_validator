@@ -19,15 +19,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public abstract class Validator<D> {
-    private List<RuleItem<D, Object>> ruleItems = new CopyOnWriteArrayList<>();
-    private List<ValidationCapsule<D, ?>> validationCapsules = new CopyOnWriteArrayList<>();
-    private List<ValidationItemList<D, ?, ?>> validationItemLists = new CopyOnWriteArrayList<>();
+    private List<RuleItem<D, Object>> ruleItems = new ArrayList<>();
+    private List<ValidationCapsule<D, ?>> validationCapsules = new ArrayList<>();
+    private List<ValidationItemList<D, ?, ?>> validationItemLists = new ArrayList<>();
+    private final ReentrantLock lock = new ReentrantLock();
 
     public Validator<D> addCharSequenceRule(final Function<D, CharSequence> field, final String fieldName, final UnaryOperator<CharSequenceRule<CharSequence>> rule) {
         this.addRule(field, fieldName, rule, CharSequenceRule::new);
@@ -70,8 +71,13 @@ public abstract class Validator<D> {
     }
 
     private <V, R extends Rule<V>> void addRule(final Function<D, V> field, final String fieldName, final UnaryOperator<R> ruleFn, final Supplier<R> ruleInstance) {
-        final R rule = ruleInstance.get();
-        this.ruleItems.add(new RuleItem(ruleFn.apply(rule).getRules(), fieldName, field));
+        lock.lock();
+        try {
+            final R rule = ruleInstance.get();
+            this.ruleItems.add(new RuleItem(ruleFn.apply(rule).getRules(), fieldName, field));
+        } finally {
+            lock.unlock();
+        }
     }
 
     public ValidationResult run(D d) {
@@ -90,7 +96,8 @@ public abstract class Validator<D> {
         return runValidation(d, validateIfNull, "");
     }
 
-    private synchronized ValidationResult runValidation(D d, boolean validateIfNull, String fieldName) {
+    private ValidationResult runValidation(D d, boolean validateIfNull, String fieldName) {
+        lock.lock();
         try {
             if (d == null && validateIfNull) {
                 return new ValidationResult(false, Collections.singletonList(new ValidationError(fieldName, null, Bundle.getInstance().get("notNull", null))));
@@ -140,6 +147,7 @@ public abstract class Validator<D> {
             ruleItems = new ArrayList<>();
             validationCapsules = new ArrayList<>();
             validationItemLists = new ArrayList<>();
+            lock.unlock();
         }
     }
 
